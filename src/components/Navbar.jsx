@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { LuBus, LuUser } from "react-icons/lu";
 import { BsBrightnessHigh } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
-import { token } from '../utils/icons/constant';
 import {
   Select,
   SelectContent,
@@ -13,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { token } from '../utils/constant';
 
 
 const Navbar = () => {

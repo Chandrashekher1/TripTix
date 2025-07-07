@@ -3,7 +3,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
 import { useNavigate, useParams } from 'react-router-dom';
 import useBus from '../hook/useBus';
-import { token } from '../utils/icons/constant';
+import { token } from '../utils/constant';
 
 const SeatSelection = () => {
   const  busId = useParams()

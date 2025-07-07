@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaArrowRight } from "react-icons/fa";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { Bus_API, Route_API } from '../utils/icons/constant';
+import { Bus_API, Route_API } from '../utils/constant';
 import { useNavigate } from 'react-router-dom';
 import useBus from '../hook/useBus';
 

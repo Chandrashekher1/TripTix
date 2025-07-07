@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Login_Api, Register_API } from '../utils/icons/constant';
+import { Login_Api, Register_API } from '../utils/constant';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
