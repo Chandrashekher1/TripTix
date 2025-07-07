@@ -3,15 +3,6 @@ import { Link } from 'react-router-dom'
 import { LuBus, LuUser } from "react-icons/lu";
 import { BsBrightnessHigh } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { token } from '../utils/constant';
 
 
@@ -32,17 +23,6 @@ const Navbar = () => {
         </div>
         <div className='flex border border-gray-200 hover:bg-blue-100 rounded-md px-3 py-2 mx-4 cursor-pointer'>
             <BsBrightnessHigh style={{marginTop:'4', marginLeft:''}}/>
-
-            <Select>
-  <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder="Theme" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="light">Light</SelectItem>
-    <SelectItem value="dark">Dark</SelectItem>
-    <SelectItem value="system">System</SelectItem>
-  </SelectContent>
-</Select><command />
         </div>
     </div>
   )
