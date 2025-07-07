@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bus_API } from '../utils/icons/constant';
+import { Bus_API } from '../utils/constant';
 import useBus from '../hook/useBus';
 import { FaStar } from "react-icons/fa";
 import { TbUsers } from "react-icons/tb";

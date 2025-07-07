@@ -3,7 +3,7 @@ import { LuBus, LuUser } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiCalendar, FiGift } from 'react-icons/fi';
 import { MdOutlineWatchLater } from 'react-icons/md';
-import { Profile_API, token } from '../utils/icons/constant';
+import { Profile_API, token } from '../utils/constant';
 
 const Profile = () => {
     const [isprofile, setIsProfile] = useState(false)
