@@ -27,7 +27,6 @@ const BusCard = () => {
     const route = {
       origin: bus.routesId.origin || "",
       destination: bus.routesId.destination || "",
-      // Optionally add: date: new Date(bus.dep_time)
     };
 
     searchData?.setRouteDetails?.(route);
