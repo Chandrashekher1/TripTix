@@ -8,21 +8,22 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className='bg-gray-950 px-4 py-8'>
-        <div>
+    <div className='bg-gray-950 px-4 py-8 md:flex flex-col justify-around md:px-16'>
+        <div className='md:flex justify-around'>
+            <div className='md:w-80'>
             <h2 className='text-white font-bold text-3xl flex'><span><LuBus style={{color: 'blue' , fontSize:'30px' , marginTop:'4', marginRight:'6px'}}/></span>TripTix</h2>
-            <p className='text-gray-400 my-4'>Your trusted partner for Comfortable and safe bus travel across the country. Book your Journeywith confidence.</p>
+            <p className='text-gray-400 my-4 '>Your trusted partner for Comfortable and safe bus travel across the country. Book your Journeywith confidence.</p>
             <SocialIcons/>
         </div>
 
         <div>
             <h1 className='text-2xl text-white my-4 font-bold'>Quick Links</h1>
-            <ul>
-                <li className='text-gray-400 my-2'>Search Buses</li>
-                <li className='text-gray-400 my-2'>Track Bus</li>
-                <li className='text-gray-400 my-2'>My Booking</li>
-                <li className='text-gray-400 my-2'>Cancel Ticket</li>
-                <li className='text-gray-400'>Help & Support </li>
+            <ul className=''>
+                <li className='text-gray-400 my-2 hover:cursor-pointer hover:text-white'>Search Buses</li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Track Bus</li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>My Booking</li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Cancel Ticket</li>
+                <li className='text-gray-400 hover:text-white hover:cursor-pointer'>Help & Support </li>
 
             </ul>
 
@@ -30,11 +31,11 @@ const Footer = () => {
         <div>
             <h1 className='text-2xl text-white my-4 font-bold'>Popular Routes</h1>
             <ul>
-                <li className='text-gray-400 my-2'>Search Buses</li>
-                <li className='text-gray-400 my-2'>Track Bus</li>
-                <li className='text-gray-400 my-2'>My Booking</li>
-                <li className='text-gray-400 my-2'>Cancel Ticket</li>
-                <li className='text-gray-400'>Help & Support </li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Search Buses</li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Track Bus</li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>My Booking</li>
+                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Cancel Ticket</li>
+                <li className='text-gray-400 hover:text-white hover:cursor-pointer'>Help & Support </li>
 
             </ul>
         </div>
@@ -44,12 +45,13 @@ const Footer = () => {
             <a href="mailto:cpsaw999041@gmail.com" className='flex text-gray-400 my-2'>{<MdOutlineMail style={{color:'teal' , fontSize:'20px', marginTop:'3px' , marginRight:'6px'}}/>} support@triptix.com</a>
             <p className='flex '><IoLocationOutline style={{marginTop:'4px', color:"teal", marginRight:'4px',fontSize:'20px'}}/><span className='text-gray-400'>123 Travel Street transport City, TC 12345</span></p>
         </div>
-        <div className='border-t border-gray-900 text-gray-400 text-center my-4'>
-            <p className='my-4'>@2025 TripTix. All rights reserved.</p>
-            <div>
-                <Link className='mx-4'>Privacy Policy</Link>
-                <Link>Terms of Service</Link>
-                <Link className='mx-4'>Cookies</Link>
+        </div>
+        <div className='border-t border-gray-900 text-gray-400 text-center my-8 md:flex justify-between'>
+            <p className='my-8'>@2025 TripTix. All rights reserved.</p>
+            <div className='my-8'>
+                <Link className='mx-4 hover:text-white hover:cursor-pointer'>Privacy Policy</Link>
+                <Link className='hover:text-white hover:cursor-pointer'>Terms of Service</Link>
+                <Link className='mx-4 hover:text-white hover:cursor-pointer'>Cookies</Link>
 
             </div>
         </div>
