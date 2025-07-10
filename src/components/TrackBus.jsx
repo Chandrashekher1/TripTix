@@ -3,13 +3,14 @@ import { CiSearch } from "react-icons/ci";
 
 const TrackBus = () => {
   return (
-    <div className='home px-4 py-8'>
+    <div className='home py-8'>
         <h1 className='text-center font-bold text-3xl'>Track Your Bus</h1>
         <p className='text-center text-gray-700 my-2'>Enter your booking ID or bus number to track real-time location</p>
 
-        <div>
-            <form action="" className='flex border bg-white py-6 px-4 my-4 rounded-md border-gray-100 shadow-xl' onSubmit={(e) => e.preventDefault()}>
-                <input type="text" placeholder='Enter booking ID or bus number' className='p-2 rounded-md border border-gray-200'/>
+        <div className='md:mx-60 mx-4'>
+            <div>
+            <form action="" className='flex border bg-white py-6 px-4 my-4 rounded-md border-gray-100 shadow-xl w-full' onSubmit={(e) => e.preventDefault()}>
+                <input type="text" placeholder='Enter booking ID or bus number' className='p-2 rounded-md border border-gray-200 w-full'/>
                 <button className='btn-primary flex font-semibold mx-4 '><CiSearch style={{marginTop:'4px', marginRight:'4px', fontSize:'20px'}}/> Track</button>
             </form>
         </div>
@@ -20,6 +21,7 @@ const TrackBus = () => {
                 <button className='border rounded-full bg-blue-100 p-1 text-blue-700 px-4 border-transparent mx-2'>RR12345678</button>
                 <button className='border rounded-full bg-blue-100 p-1 text-blue-700 px-4 border-transparent mx-2 my-2'>RR12345678</button>
             </div>
+        </div>
         </div>
     </div>
   )
