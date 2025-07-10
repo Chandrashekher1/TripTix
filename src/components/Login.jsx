@@ -63,7 +63,7 @@ const Login = () => {
 
   return (
     <div>
-      <form className="flex flex-col justify-center w-[50%] mx-auto bg-white border rounded-md shadow-lg p-8 my-16" onSubmit={handleSubmit}>
+      <form className="flex flex-col justify-center md:w-[50%] mx-8 bg-white border border-transparent rounded-md shadow-xl p-8 my-16" onSubmit={handleSubmit}>
         <h1 className="text-center font-semibold text-xl">
           {isLogin ? 'Welcome Back' : 'Create Account'}
         </h1>
