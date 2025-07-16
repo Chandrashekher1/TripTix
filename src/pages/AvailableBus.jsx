@@ -19,7 +19,7 @@ const AvailableBus = () => {
     const fetchBus = async () => {
       try {
         const res = await fetch(
-          `${Bus_API}origin=${searchData.routeDetails.origin}&destination=${searchData.routeDetails.destination}`
+          `${Bus_API}?origin=${searchData.routeDetails.origin}&destination=${searchData.routeDetails.destination}`
         );
         const json = await res.json();
         setBuses(json);
@@ -35,7 +35,24 @@ const AvailableBus = () => {
       navigate('/')
     }
 
-  }, [searchData]);
+  }, [searchData])
+
+  const getDuration = (depTime, arrTime) => {
+    const dep = new Date(depTime);
+    let arr = new Date(arrTime);
+
+    if (isNaN(dep) || isNaN(arr)) return '--';
+
+    // for overnight buses
+    if (arr < dep) arr.setDate(arr.getDate() + 1);
+
+    const diff = arr - dep;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${hours}h ${minutes}m`;
+  };
+
 
   return (
     <div className="home py-8">
@@ -47,14 +64,19 @@ const AvailableBus = () => {
         <p className="text-gray-700 font-semibold text-center bg-white shadow mx-4 py-8">No buses available for this route.</p>
       ) : (
         buses.map((bus, index) => (
-          <div key={index} className="border px-4 mx-4 my-4 py-4 bg-white shadow-xl border-transparent rounded-md">
+          <div key={index} className="border px-4 mx-4 my-4 py-4 bg-white shadow-xl border-transparent rounded-md md:mx-60">
             <h1 className="font-bold text-xl flex justify-between">{bus.operator} <span className='font-bold flex text-sm'><FaStar style={{color: 'yellow' , fontSize:'20px'}}/>4.5</span></h1>
             <p className="text-gray-700">{bus.isAc ? "AC" : null} {bus.isSleeper ? "Sleeper": null}</p>
-
-           <div className='flex justify-between my-4 mx-8'>
-               <p className="font-semibold">{new Date(bus.dep_time).toLocaleString()}</p>
-              <div className='border-b text-gray-700 mx-4'>8h 30min</div>
-              <p className="font-semibold">{new Date(bus.arrivalTime).toLocaleString()}</p>
+            <div className='flex justify-between my-4 mx-4 md:items-center'>
+              <p className="font-semibold">
+                {new Date(bus.dep_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </p>
+              <div className='border-b w-40 text-center text-gray-700 mx-4'>
+                {getDuration(bus.dep_time, bus.arrivalTime)}
+              </div>
+              <p className="font-semibold">
+                {new Date(bus.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </p>  
            </div>
             <p className="text-gray-700 font-semibold">Bus No: {bus.busNumber}</p>
             <p className="text-green-700 font-semibold my-4 flex justify-center text-xl"><TbUsers style={{marginTop:'4px', marginRight:'4px'}}/> <span className='font-bold mx-1'>{bus.totalSeat}</span> Seats available</p>
