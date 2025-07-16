@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { LuUser } from "react-icons/lu";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bus_API, token } from '../utils/constant';
+import { Booking_API, Bus_API, Razorpay_API, token } from '../utils/constant';
+import { io } from 'socket.io-client';
 
 const PassengerDetails = () => {
   const navigate = useNavigate()
@@ -16,9 +17,11 @@ const PassengerDetails = () => {
         gender: ''
       }))
   )
-  
+  const socket = io("https://triptix-backend-4ryx.onrender.com/")
+
 
   useEffect(() => {
+    
     const fetchBusDetails = async () => {
       try {
         const fetchBus = await fetch(`${Bus_API}/${state.busId}`);
@@ -35,7 +38,7 @@ const PassengerDetails = () => {
     const userId = localStorage.getItem("user");
 
     try {
-      const res = await fetch('http://localhost:3000/api/v1/booking/book', {
+      const res = await fetch(Booking_API, {
         method: 'POST',
         headers: {
           'authorization':token,
@@ -50,21 +53,55 @@ const PassengerDetails = () => {
       });
 
       const data = await res.json();
-
       if (data.success) {
-        alert("Booking confirmed!");
-        navigate("/my-bookings");
-      } else {
-        alert(data.message);
-      }
+        alert("Booking successful!");
+        navigate('/profile');
+      } 
+
     } catch (err) {
-      console.error("Booking error:", err.message);
+      console.error(err.message);
       alert("Something went wrong. Please try again.");
     }
   }
 
+  const handlePayment = async() => {
+      const res = await fetch(Razorpay_API, {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        body: JSON.stringify({amount: BusDetails.price * state.selectedSeats.length})
+      })
+      const data = await res.json()
+      console.log(data);
 
-
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, 
+        amount: data.amount,
+        currency: data.currency,
+        name: 'TripTix Booking',
+        description: 'Bus Ticket Booking',
+        order_id: data.id,
+        handler: function(response) {
+          alert('Payment successful!');
+          console.log(response);
+          if(response.razorpay_payment_id) {
+            handleBooking()
+          }
+      },
+      modal: {
+        ondismiss: () => {
+          alert('Payment cancelled');
+          socket.emit('unlockSeats', {seatIds: state.selectedSeats})
+        }
+      },
+      theme: {
+          color: '#3399cc'}
+    }
+      const rzp = new window.Razorpay(options)
+      rzp.open();
+  }
   const departureTime = new Date(BusDetails.dep_time).toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit'
@@ -109,7 +146,7 @@ const PassengerDetails = () => {
             <div className="my-4">
               <p className="font-semibold flex items-center">
                 <LuUser className="text-blue-600 text-xl mr-2" />
-                Passenger {index + 1} (Seat {seat})
+                Passenger {index + 1} 
               </p>
             </div>
             <label className="font-semibold my-2">Full Name</label>
@@ -167,21 +204,13 @@ const PassengerDetails = () => {
           <p className='flex justify-between'>Duration <span className='font-bold'>{getDuration(departureTime,arrivalTime)}</span></p>
 
           <div className='border-b my-4 border-gray-200'></div>
-          {/* <div>
-            <p className='font-semibold text-gray-700'>Selected Seats</p>
-            <div className='flex flex-wrap gap-2 mt-2'>
-              {state?.selectedSeats?.map(seat => (
-                <span key={seat} className='rounded-full bg-blue-50 text-gray-700 px-3 py-1'>{seat}</span>
-              ))}
-            </div>
-          </div> */}
           <div className='border-b border-gray-300 my-4'></div>
           <div>
             <p className='flex justify-between my-2'>Base Fare ({state.selectedSeats.length}) <span>₹{BusDetails.price * state.selectedSeats.length}</span></p>
             <p className='flex justify-between my-2 font-bold text-xl'>Total <span className='text-blue-700'>₹{BusDetails.price * state.selectedSeats.length}</span></p>
           </div>
 
-          <button className='btn-primary w-full mt-4 cursor-pointer'  onClick={handleBooking}>Proceed to Payment</button>
+          <button className='btn-primary w-full mt-4 cursor-pointer'  onClick={handlePayment}>Proceed to Payment</button>
         </div>
       </div>
     </div>
