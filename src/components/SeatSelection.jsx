@@ -14,6 +14,11 @@ const SeatSelection = () => {
   const [message, setMessage] = useState('');
   const socket = io("https://triptix-backend-4ryx.onrender.com/")
 
+  if(!token){
+    alert("Please login to book seats");
+    navigate('/login')
+  }
+
   useEffect(() => {
     fetchSeats();
     fetchBusDetails();
