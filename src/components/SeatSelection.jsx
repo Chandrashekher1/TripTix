@@ -12,7 +12,7 @@ const SeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null);
   const [message, setMessage] = useState('');
-  const socket = io("http://localhost:3000")
+  const socket = io("https://triptix-backend-4ryx.onrender.com/")
 
   useEffect(() => {
     fetchSeats();
@@ -21,7 +21,7 @@ const SeatSelection = () => {
     socket.on('seatsUpdated', ({seatIds,status,userId}) => {
       setSeats(prev => 
         prev.map(seat => seatIds.includes(seat._id) ? {...seat, status, userId } : seat))
-  })
+    })
 
     return () => {
       socket.off('seatsUpdated')
@@ -68,8 +68,7 @@ const SeatSelection = () => {
     const userId = localStorage.getItem('user') 
     socket.emit('lockSeats',{busId, seatIds: selectedSeats, userId: userId})
     navigate('/passenger-details', { state: { busId, selectedSeats } })
-  };
-
+  }
   return (
     <div className='home px-6 md:px-12 py-6 md:py-12'>
       <div className='flex flex-col md:flex-row md:justify-between items-start md:items-center mb-6 gap-4 md:px-24'>
