@@ -45,13 +45,24 @@ TripTix is a full-stack real-time web application that allows users to search fo
 /components
 - BusCard.jsx
 - ChatBot.jsx
+- Footer.jsx
+- Header.jsx
+- Login.jsx
+- Navbar.jsx
+- OfferCard.jsx
+- Payment.jsx
+- SearchBar.jsx
 - SeatSelection.jsx
-- PassengerDetails.jsx
-- ChatBot.jsx
+/context
+- BusContext.js
+- BusProvider.jsx
+/hook
+- useBus.js
 /pages
 - Home.jsx
+- AvailableBus.jsx
+- PassengerDetails.jsx
 - Profile.jsx
-- Login/Register
 /utils
 - constants.js
 App.js
@@ -86,7 +97,7 @@ index.js
 
 ---
 
-## ⚙️ How It Works
+##  How It Works
 
 1. **User logs in** and searches for buses.
 2. **User selects a bus** and views available seats.
@@ -99,25 +110,42 @@ index.js
 
 ##  Setup Instructions
 
-### 🔧 Prerequisites
+###  Prerequisites
 - Node.js
 - MongoDB
 - Razorpay Account (API Keys)
 - Google Gemini API Key (Optional for ChatBot)
 
-### 🛠️ Installation
+###  Installation
 
 ```bash
 # Clone the project
 git clone https://github.com/Chandrashekher1/TripTix.git
 cd tripTix
 
-# Install server dependencies
+# Install Frontend dependencies
 npm install
 
-# Install client dependencies
-cd ../client
-npm install
+# Run Frontend
+npm run dev
+
+```
+## Real-Time ChatBot
+- Uses Google Gemini API to answer user FAQs related to bookings.
+- Uses Google Gemini API to answer user FAQs related to bookings.
+
+## Screenshots
+<img width="1900" height="681" alt="image" src="https://github.com/user-attachments/assets/ecf308d4-56b7-434f-800c-2b46e21af190" />
+<img width="1899" height="867" alt="image" src="https://github.com/user-attachments/assets/2a7693f8-5bbe-40a6-a5b2-02fbc0922dc7" />
+<img width="1900" height="783" alt="image" src="https://github.com/user-attachments/assets/5113f663-0e6f-47e6-83e7-50e19fe81ab8" />
+<img width="1895" height="775" alt="image" src="https://github.com/user-attachments/assets/f88386da-85c9-457e-8e61-3dcc3a8bec81" />
+
+
+## Author
+Chandrashekher Prasad
+
+## License
+MIT License - feel free to use, fork, and build upon it!
 
 
 
