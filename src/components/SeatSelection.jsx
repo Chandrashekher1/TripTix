@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { FiUser } from 'react-icons/fi';
@@ -7,20 +7,16 @@ import { token, Bus_API, Seat_API } from '../utils/constant';
 const SeatSelection = () => {
   const { id: busId } = useParams();
   const navigate = useNavigate();
-
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  
 
   const fetchSeats = async () => {
     try {
       const res = await fetch(`${Seat_API}/${busId}`, {
-        headers: {
-          Authorization: token
-        }
+        headers: { Authorization: token }
       });
       const json = await res.json();
       if (json.success) {
@@ -57,106 +53,102 @@ const SeatSelection = () => {
     }
   };
 
+  const handleBooking = () => {
+    navigate('/passenger-details', { state: { busId, selectedSeats } })
+  };
+
   return (
-        <div className='home px-6 md:px-12 py-6 md:py-12'>
+    <div className='home px-6 md:px-12 py-6 md:py-12'>
       <div className='flex flex-col md:flex-row md:justify-between items-start md:items-center mb-6 gap-4 md:px-24'>
-    <p
-      className='flex items-center text-blue-600 font-medium cursor-pointer hover:underline'
-      onClick={() => navigate('/available-seat')}
-    >
-      <IoIosArrowRoundBack className='text-2xl md:mr-2' /> Back to Buses
-    </p>
-    <div>
-      <h1 className='font-bold text-2xl md:text-3xl'>{selectedBus?.operator || "Bus"}</h1>
-      <span className='text-gray-600 text-base md:text-lg'>
-        {selectedBus?.isAc ? 'AC' : ''} {selectedBus?.isSleeper ? 'Sleeper' : ''}
-      </span>
-    </div>
-  </div>
-
-  <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-    <div className='bg-white p-6 md:p-8 rounded-md shadow-lg col-span-2'>
-      <h1 className='text-center text-xl md:text-2xl font-semibold mb-4'>Select Your Seats</h1>
-
-      <div className='flex gap-6 justify-center mb-6 text-sm md:text-base'>
-        <p><span className='inline-block w-4 h-4 bg-green-500 rounded mr-2'></span>Available</p>
-        <p><span className='inline-block w-4 h-4 bg-blue-600 rounded mr-2'></span>Selected</p>
-        <p><span className='inline-block w-4 h-4 bg-gray-500 rounded mr-2'></span>Booked</p>
+        <p className='flex items-center text-blue-600 font-medium cursor-pointer hover:underline' onClick={() => navigate('/available-seat')}>
+          <IoIosArrowRoundBack className='text-2xl md:mr-2' /> Back to Buses
+        </p>
+        <div>
+          <h1 className='font-bold text-2xl md:text-3xl'>{selectedBus?.operator || "Bus"}</h1>
+          <span className='text-gray-600 text-base md:text-lg'>
+            {selectedBus?.isAc ? 'AC' : ''} {selectedBus?.isSleeper ? 'Sleeper' : ''}
+          </span>
+        </div>
       </div>
 
-      <div className='flex flex-col items-center mb-6 p-4 bg-gray-100 rounded-md'>
-        <FiUser className='text-lg mb-1' />
-        <span className='text-gray-600 text-sm'>Driver</span>
-      </div>
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+        <div className='bg-white p-6 md:p-8 rounded-md shadow-lg col-span-2'>
+          <h1 className='text-center text-xl md:text-2xl font-semibold mb-4'>Select Your Seats</h1>
 
-      <div className='grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4'>
-        {seats.map((seat) => {
-          const isSelected = selectedSeats.includes(seat._id);
-          let seatColor = 'bg-green-500';
+          <div className='flex gap-6 justify-center mb-6 text-sm md:text-base'>
+            <p><span className='inline-block w-4 h-4 bg-green-500 rounded mr-2'></span>Available</p>
+            <p><span className='inline-block w-4 h-4 bg-blue-600 rounded mr-2'></span>Selected</p>
+            <p><span className='inline-block w-4 h-4 bg-gray-500 rounded mr-2'></span>Booked</p>
+          </div>
 
-          if (isSelected) seatColor = 'bg-blue-600';
-          else if (seat.status !== 'available') seatColor = 'bg-gray-500';
+          <div className='flex flex-col items-center mb-6 p-4 bg-gray-100 rounded-md'>
+            <FiUser className='text-lg mb-1' />
+            <span className='text-gray-600 text-sm'>Driver</span>
+          </div>
 
-          return (
-            <div
-              key={seat._id}
-              className={`p-2 md:p-3 rounded-md text-center cursor-pointer text-white font-semibold ${seatColor}`}
-              onClick={() => toggleSeatSelection(seat._id, seat.status)}
-            >
-              {seat.seatNumber}
-            </div>
-          );
-        })}
-      </div>
+          <div className='grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4'>
+            {seats.map((seat) => {
+              const isSelected = selectedSeats.includes(seat._id)
+              let seatColor = 'bg-green-500'
 
-      {message && (
-        <p className='text-red-600 text-center mt-4 text-sm'>{message}</p>
-      )}
-    </div>
+              if (isSelected) seatColor = 'bg-blue-600'
+              else if (seat.status !== 'available') seatColor = 'bg-gray-500'
 
-    <div className='bg-white p-6 md:p-8 rounded-md shadow-xl h-fit'>
-      <h2 className='font-semibold text-xl md:text-2xl mb-4'>Booking Summary</h2>
+              return (
+                <div
+                  key={seat._id}
+                  className={`p-2 md:p-3 rounded-md text-center cursor-pointer text-white font-semibold ${seatColor}`}
+                  onClick={() => toggleSeatSelection(seat._id, seat.status)}
+                >
+                  {seat.seatNumber}
+                </div>
+              );
+            })}
+          </div>
 
-      <div className='mb-4'>
-        <p className='font-semibold mb-2'>Selected Seats</p>
-        <div className='flex flex-wrap gap-2'>
-          {selectedSeats.length > 0 ? (
-            selectedSeats.map((seat) => (
-              <span
-                key={seat}
-                className='bg-gray-100 px-3 py-1 rounded-2xl font-semibold text-sm'
-              >
-                {`Seat ${seats.find(s => s._id === seat)?.seatNumber || seat}`}
-              </span>
-            ))
-          ) : (
-            <p className='text-gray-500 text-sm'>No seats selected</p>
+          {message && (
+            <p className='text-red-600 text-center mt-4 text-sm'>{message}</p>
           )}
         </div>
-      </div>
 
+        <div className='bg-white p-6 md:p-8 rounded-md shadow-xl h-fit'>
+          <h2 className='font-semibold text-xl md:text-2xl mb-4'>Booking Summary</h2>
 
-      <div className='border-t border-gray-200 pt-4 mt-4'>
-        <div className='flex justify-between text-sm mb-2'>
-          <p>Seats ({selectedSeats.length})</p>
-          <p>₹{selectedSeats.length * (selectedBus?.price || 0)}</p>
+          <div className='mb-4'>
+            <p className='font-semibold mb-2'>Selected Seats</p>
+            <div className='flex flex-wrap gap-2'>
+              {selectedSeats.length > 0 ? (
+                selectedSeats.map((seat) => (
+                  <span key={seat} className='bg-gray-100 px-3 py-1 rounded-2xl font-semibold text-sm'>
+                    {`Seat ${seats.find(s => s._id === seat)?.seatNumber || seat}`}
+                  </span>
+                ))
+              ) : (
+                <p className='text-gray-500 text-sm'>No seats selected</p>
+              )}
+            </div>
+          </div>
+
+          <div className='border-t border-gray-200 pt-4 mt-4'>
+            <div className='flex justify-between text-sm mb-2'>
+              <p>Seats ({selectedSeats.length})</p>
+              <p>₹{selectedSeats.length * (selectedBus?.price || 0)}</p>
+            </div>
+            <div className='flex justify-between font-bold text-base'>
+              <p>Total</p>
+              <p className='text-blue-600'>₹{selectedSeats.length * (selectedBus?.price || 0)}</p>
+            </div>
+            <button
+              className='btn-primary w-full mt-6 disabled:opacity-50 cursor-pointer hover:bg-blue-700'
+              onClick={handleBooking}
+              disabled={selectedSeats.length === 0 || loading}
+            >
+              Proceed to Book
+            </button>
+          </div>
         </div>
-        <div className='flex justify-between font-bold text-base'>
-          <p>Total</p>
-          <p className='text-blue-600'>₹{selectedSeats.length * (selectedBus?.price || 0)}</p>
-        </div>
-        <button
-          className='btn-primary w-full mt-6 disabled:opacity-50'
-          onClick={() => navigate('/passenger-details')}
-          disabled={selectedSeats.length === 0 || loading}
-        >
-          Proceed to Book
-        </button>
       </div>
     </div>
-  </div>
-</div>
-
   );
 };
 
