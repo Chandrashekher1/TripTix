@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { FiUser } from 'react-icons/fi';
 import { token, Bus_API, Seat_API } from '../utils/constant';
+import { io } from 'socket.io-client';
 
 const SeatSelection = () => {
   const { id: busId } = useParams();
@@ -10,8 +11,23 @@ const SeatSelection = () => {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const socket = io("http://localhost:3000")
+
+  useEffect(() => {
+    fetchSeats();
+    fetchBusDetails();
+
+    socket.on('seatsUpdated', ({seatIds,status,userId}) => {
+      setSeats(prev => 
+        prev.map(seat => seatIds.includes(seat._id) ? {...seat, status, userId } : seat))
+  })
+
+    return () => {
+      socket.off('seatsUpdated')
+    }
+
+  }, [busId]);
 
   const fetchSeats = async () => {
     try {
@@ -37,12 +53,7 @@ const SeatSelection = () => {
     } catch (err) {
       console.error('Error :', err.message);
     }
-  };
-
-  useEffect(() => {
-    fetchSeats();
-    fetchBusDetails();
-  }, [busId]);
+  }
 
   const toggleSeatSelection = (seatId, status) => {
     if (status !== 'available') return;
@@ -54,6 +65,8 @@ const SeatSelection = () => {
   };
 
   const handleBooking = () => {
+    const userId = localStorage.getItem('user') 
+    socket.emit('lockSeats',{busId, seatIds: selectedSeats, userId: userId})
     navigate('/passenger-details', { state: { busId, selectedSeats } })
   };
 
@@ -119,6 +132,7 @@ const SeatSelection = () => {
             <div className='flex flex-wrap gap-2'>
               {selectedSeats.length > 0 ? (
                 selectedSeats.map((seat) => (
+
                   <span key={seat} className='bg-gray-100 px-3 py-1 rounded-2xl font-semibold text-sm'>
                     {`Seat ${seats.find(s => s._id === seat)?.seatNumber || seat}`}
                   </span>
@@ -141,7 +155,7 @@ const SeatSelection = () => {
             <button
               className='btn-primary w-full mt-6 disabled:opacity-50 cursor-pointer hover:bg-blue-700'
               onClick={handleBooking}
-              disabled={selectedSeats.length === 0 || loading}
+              disabled={selectedSeats.length === 0 }
             >
               Proceed to Book
             </button>
