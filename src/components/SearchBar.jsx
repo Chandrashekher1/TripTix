@@ -28,11 +28,9 @@ const SearchBar = () => {
         alert("No route found.");
         return;
       }
-
-      const busResponse = await fetch(`${Bus_API}origin=${origin}&destination=${destination}&date=${date}`);
+      const busResponse = await fetch(`${Bus_API}?origin=${origin}&destination=${destination}&date=${date}`);
       const busJson = await busResponse.json();
       setBuses(busJson)
-
       navigate('/available-seat');
     } catch (err) {
       console.error("Error fetching buses:", err.message);
