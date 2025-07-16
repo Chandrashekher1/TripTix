@@ -13,8 +13,6 @@ const Profile = () => {
     const [editPhone, setEditPhone] = useState('')
     const [editMode,setEditMode] = useState(false)
     const id = localStorage.getItem('user')
-    // console.log(id);
-    
 
     const fetchUser = async() => {
         try{
@@ -71,11 +69,26 @@ const Profile = () => {
             <h1 className='font-bold text-3xl my-4 text-gray-900'>{data.name}</h1>
             <p className='flex text-gray-700'>{data.email} <span className='mx-4'> <li>{data.phone}</li></span></p>
         </div>
-        <div className='flex mx-4  my-4 text-gray-700 border border-transparent bg-blue-50 py-1  rounded-md justify-around' >
-            <button onClick={() => setIsProfile(true)}>My Bookings</button>
-            <button className=' bg-white px-6 py-2 rounded-md text-black font-semibold' onClick={() => setIsProfile(false)}>Profile Settings</button>
+        <div className='flex mx-4 my-4 text-gray-700 border border-transparent bg-blue-50 py-1 rounded-md justify-around md:mx-60'>
+            <button
+                className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${
+                isprofile ? 'bg-white text-black' : 'bg-transparent'
+                }`}
+                onClick={() => setIsProfile(true)}
+            >
+                My Bookings
+            </button>
+            <button
+                className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${
+                !isprofile ? 'bg-white text-black' : 'bg-transparent'
+                }`}
+                onClick={() => setIsProfile(false)}
+            >
+                Profile Settings
+            </button>
         </div>
-        <div className='mx-4 my-4'>
+
+        <div className='mx-4 my-4 md:my-8 md:mx-60'>
             {!isprofile && <div className='bg-white border border-transparent shadow-md px-4 rounded-md'>
                 <h1 className='font-semibold text-xl my-4'>Personal Information</h1>
                 <div className='my-4'>
@@ -108,7 +121,7 @@ const Profile = () => {
                 )}
 
             </div>}
-            {isprofile && <div className=' bg-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md'>
+            {isprofile && <div className=' bg-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md '>
                 <div className='flex justify-between'>
                     <h1 className='flex flex-col font-semibold text-lg'>Swift Travels <span className='text-sm text-gray-700'>Booking ID : RR12345678</span></h1>
                     <p className='bg-red-100 font-semibold py-2 rounded-full text-red-700 px-4'>Cancelled</p>
