@@ -1,7 +1,10 @@
-export const Register_API = "http://localhost:3000/api/v1/user/signup"
-export const Login_Api = "http://localhost:3000/api/v1/login"
-export const Profile_API="http://localhost:3000/api/v1/user"
-export const Route_API="http://localhost:3000/api/v1/route?"
-export const Bus_API="http://localhost:3000/api/v1/bus"
-export const Seat_API="http://localhost:3000/api/v1/seat"
+export const Register_API = "https://triptix-backend-4ryx.onrender.com/api/v1/user/signup"
+export const Login_Api = "https://triptix-backend-4ryx.onrender.com/api/v1/login"
+export const Profile_API="https://triptix-backend-4ryx.onrender.com/api/v1/user"
+export const Route_API="https://triptix-backend-4ryx.onrender.com/api/v1/route?"
+export const Bus_API="https://triptix-backend-4ryx.onrender.com/api/v1/bus"
+export const Seat_API="https://triptix-backend-4ryx.onrender.com/api/v1/seat"
+export const Socket_URL = "https://triptix-backend-4ryx.onrender.com/"
+export const Booking_API = 'https://triptix-backend-4ryx.onrender.com/api/v1/booking/book'
+export const Razorpay_API='https://triptix-backend-4ryx.onrender.com/api/v1/payment/create-order'
 export const token = localStorage.getItem('authorization')
