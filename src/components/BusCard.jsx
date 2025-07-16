@@ -50,7 +50,7 @@ const BusCard = () => {
           className="w-96 shadow bg-white hover:shadow-2xl cursor-pointer mx-4 my-4 rounded-md border border-gray-200 transition duration-300"
         >
           <img
-            src="https://s3-ap-southeast-1.amazonaws.com/rb-plus/BI/APP/IND/WM/17256/5/FR/ML/reRz0p.jpeg"
+            src="https://png.pngtree.com/thumb_back/fh260/background/20230717/pngtree-d-rendering-of-a-white-isolated-background-featuring-a-medium-sized-image_3893569.jpg"
             alt="Bus"
             className="rounded-t-md w-full h-48 object-cover"
           />
