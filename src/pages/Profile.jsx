@@ -62,6 +62,11 @@ const Profile = () => {
         fetchUser()
     }, [])
 
+    const handleLogout = () => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('authorization')
+        window.location.href = '/login'
+    }
   return (
     <div className='home'>
         <div className='flex items-center justify-center flex-col py-8'>
@@ -114,11 +119,15 @@ const Profile = () => {
                          />
                     ) : <p className='text-gray-700'>{data?.phone}</p>}
                 </div>
-                {editMode ? (
-                    <button className='btn-primary my-8' onClick={updateUser}>Save Changes</button>
-                    ) : (
-                    <button className='btn-primary my-8' onClick={() => setEditMode(true)}>Edit Profile</button>
-                )}
+                <div className='flex justify-between items-center'>
+                    
+                    {editMode ? (
+                        <button className='btn-primary my-8' onClick={updateUser}>Save Changes</button>
+                        ) : (
+                        <button className='btn-primary my-8 cursor-pointer' onClick={() => setEditMode(true)}>Edit Profile</button>
+                    )}
+                    <button className='border bg-red-700 border-transparent font-semibold text-white py-2 px-2 rounded-md hover:bg-red-500 cursor-pointer' onClick={handleLogout}>Logout</button>
+                </div>
 
             </div>}
             {isprofile && <div className=' bg-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md '>
