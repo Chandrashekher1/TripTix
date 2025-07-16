@@ -11,6 +11,7 @@ import TrackBus from './components/TrackBus'
 import Login from './components/Login'
 import Profile from './pages/Profile'
 import BusProvider from './context/BusProvider'
+import ChatBot from './components/ChatBot'
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
         </div>
         <Footer/>
         </Router>
+
+        <ChatBot/>
     </BusProvider>
   
   )
