@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { LuBus, LuUser } from "react-icons/lu";
-import { IoLocationOutline } from "react-icons/io5";
-import { FiCalendar, FiGift } from 'react-icons/fi';
-import { MdOutlineWatchLater } from 'react-icons/md';
 import { Profile_API, token } from '../utils/constant';
 
 const Profile = () => {
@@ -131,7 +128,7 @@ const Profile = () => {
 
             </div>}
             {isprofile && <div className=' bg-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md '>
-                <div className='flex justify-between'>
+                {/* <div className='flex justify-between'>
                     <h1 className='flex flex-col font-semibold text-lg'>Swift Travels <span className='text-sm text-gray-700'>Booking ID : RR12345678</span></h1>
                     <p className='bg-red-100 font-semibold py-2 rounded-full text-red-700 px-4'>Cancelled</p>
                 </div>
@@ -144,7 +141,9 @@ const Profile = () => {
                     <p className='text-gray-700 flex- flex-col'>Seats <span className='broder text-black'>15</span></p>
                     <p className='text-gray-700'>Amount: <span className='font-semibold'>$38</span></p>
 
-                </div>
+                </div> */}
+
+                <p className='font-semibold text-xl text-gray-700'>No Booking Details found.</p>
             </div>}
         </div>
     </div>
