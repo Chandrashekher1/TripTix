@@ -39,6 +39,8 @@ const Login = () => {
       }
       const data = await response.json()
       setMessage(data.message)
+      console.log(data);
+      
       localStorage.setItem('user',data?._id)
       const token = response.headers.get('authorization')
       
@@ -62,7 +64,7 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className='flex items-center justify-center h-screen home'>
       <form className="flex flex-col justify-center md:w-[50%] mx-8 bg-white border border-transparent rounded-md shadow-xl p-8 my-16" onSubmit={handleSubmit}>
         <h1 className="text-center font-semibold text-xl">
           {isLogin ? 'Welcome Back' : 'Create Account'}
