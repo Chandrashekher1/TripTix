@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useBus from '../hook/useBus';
 import { useNavigate } from 'react-router-dom';
+import { Bus_API } from '../utils/constant';
 
 const BusCard = () => {
   const [listOfBuses, setListOfBuses] = useState([]);
@@ -10,7 +11,7 @@ const BusCard = () => {
   useEffect(() => {
     const fetchBus = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/bus/topRated');
+        const response = await fetch(`${Bus_API}/topRated`);
         if (!response.ok) throw new Error("Failed to fetch bus data");
         const json = await response.json();
         setListOfBuses(json || []);
@@ -42,7 +43,7 @@ const BusCard = () => {
   }
 
   return (
-    <div className="mx-4 flex flex-wrap justify-center p-16">
+    <div className="mx-4 flex flex-wrap justify-center md:p-16">
       {listOfBuses.map((bus, index) => (
         <div
           key={index}
