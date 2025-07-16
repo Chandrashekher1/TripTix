@@ -34,13 +34,13 @@ const ChatBot = () => {
             A: Select a route, choose a bus, pick seats, and proceed to payment.
 
             Q: How can I cancel a ticket?
-            A: Go to 'My Bookings' > select the ticket > click cancel.
+            A: Go to 'Profile' > My Bookings' > select the ticket > click cancel.
 
             Q: Is there a refund policy?
             A: Yes, cancellations before 24 hours get 100% refund.
 
             Q: How can I contact support?
-            A: Email us at help@swiftride.com or call 1800-000-000.
+            A: Email us at help@triptix.com or call 1800-000-000.
 
             Only respond using this information.
 
@@ -65,23 +65,30 @@ const ChatBot = () => {
           </div>
           <div className="flex-1 overflow-y-auto px-4 py-2 text-sm text-gray-700" ref={chatContainerRef}>
             {message.map((msg,index) => (
-                <div className={`flex ${msg.type === 'user'? 'justify-start':'justify-end'}`} key={index}>
-                    <div className={`max-w-[80%] p-3 rounded-lg text-sm shadow my-2 ${
-                        msg.type === 'user' ? 'bg-blue-500 text-white rounded-bl-none':
-                        'bg-gray-100 text-gray-800 rounded-br-none'
+                <div className={`flex ${msg.type === 'user'? 'justify-end':'justify-start'}`} key={index}>
+                    <div className={`flex max-w-[80%] px-3 rounded-lg text-sm shadow my-2 ${
+                        msg.type === 'user' ? 'bg-blue-500 justify-end text-white rounded-bl-none':
+                        'bg-gray-100 text-gray-800 rounded-br-none justify-start'
                     }`}>
-                        <div className="flex items-center gap-2 my-2">
-                            {msg.type === 'user' ? <FiUser /> : <RiRobot2Line style={{fontSize:'20px'}}/>}
+                        <div className="flex  items-center gap-2 my-2">
+                            {msg.type === 'user' ? <FiUser /> : <RiRobot2Line style={{fontSize:'40px'}}/>}
                             <span>{msg.text}</span>
                         </div>
                     </div>
                 </div>
             ))}
             {loading && (
-              <div className="flex justify-end">
-                <div className="text-sm text-gray-500 italic">Typing...</div>
+              <div className="flex justify-start">
+                <div className="text-sm text-gray-500 italic">Loading...</div>
               </div>
             )}
+          </div>
+          <div className='flex flex-wrap  p-2 border-t'>
+            <button className='border px-2 text-blue-600 bg-blue-100 rounded-full text-sm border-transparent my-1 mx-2' onClick={() => query.current.value = 'How to book bus?'}  >How to book bus?</button>
+            <button className='border px-2 text-blue-600 bg-blue-100 rounded-full text-sm border-transparent my-2 mx-2' onClick={() => query.current.value = 'How to cancel ticket?'}>How to cancel ticket ?</button>
+            <button className='border px-2 text-blue-600 bg-blue-100 rounded-full text-sm border-transparent my-1 mx-2' onClick={() => query.current.value = 'Refund Policies'}>Refund Policies</button>
+            <button className='border px-2 text-blue-600 bg-blue-100 rounded-full text-sm border-transparent my-1 mx-2' onClick={() => query.current.value = 'contact support'}>contact support</button>
+
           </div>
           <div className="p-2 border-t flex gap-2">
             <input
