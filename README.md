@@ -67,32 +67,7 @@ TripTix is a full-stack real-time web application that allows users to search fo
 - constants.js
 App.js
 
-/server
-/config
-- cloudinary.js
-- db.js
-- razorpay.js
-- storage.js
-/middleware
-- admin.js
-- auth.js
-/models
-- User.js
-- Bus.js
-- Seat.js
-- booking.js
-- routes.js
-/routes
-- auth.js
-- booking.js
-- buses.js
-- payment.js
-- route.js
-- seat.js
-- socket.js
-- users.js
 
-index.js
 ```
 
 ---
