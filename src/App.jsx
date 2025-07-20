@@ -19,7 +19,7 @@ function App() {
     <BusProvider>
         <Router>
         <Header/>
-        <div>
+        <div className='bg-gray-950'>
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/available-seat' element={<AvailableBus/>}/>
@@ -28,13 +28,10 @@ function App() {
             <Route path='/track-bus' element={<TrackBus/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/profile' element={<Profile/>}/>
-
-
           </Routes>
         </div>
         <Footer/>
         </Router>
-
         <ChatBot/>
     </BusProvider>
   
