@@ -64,8 +64,8 @@ const Login = () => {
   }
 
   return (
-    <div className='flex items-center justify-center h-screen home'>
-      <form className="flex flex-col justify-center md:w-[50%] mx-8 bg-white border border-transparent rounded-md shadow-xl p-8 my-16" onSubmit={handleSubmit}>
+    <div className='flex items-center justify-center h-screen border-b border-b-gray-700'>
+      <form className="flex flex-col justify-center md:w-[40vw] mx-8 bg-[#060e23] text-white border border-transparent rounded-md shadow-xl p-8 my-16" onSubmit={handleSubmit}>
         <h1 className="text-center font-semibold text-xl">
           {isLogin ? 'Welcome Back' : 'Create Account'}
         </h1>
@@ -79,7 +79,7 @@ const Login = () => {
               required
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="border px-4 py-2 rounded-md border-gray-200"
+              className="border px-4 py-2 rounded-md border-gray-700 focus:outline-blue-700"
             />
           </>
         )}
@@ -91,7 +91,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="Enter your email"
-          className="border px-4 py-2 rounded-md border-gray-200"
+          className="border px-4 py-2 rounded-md border-gray-700 focus:outline-blue-700"
         />
 
         {!isLogin && (
@@ -103,7 +103,7 @@ const Login = () => {
               onChange={(e) => setNumber(e.target.value)}
               required
               placeholder="Enter your phone"
-              className="border px-4 py-2 rounded-md border-gray-200"
+              className="border px-4 py-2 rounded-md border-gray-700 focus:outline-blue-700"
             />
           </>
         )}
@@ -115,7 +115,7 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
-          className="border px-4 py-2 rounded-md border-gray-200"
+          className="border px-4 py-2 rounded-md border-gray-700 focus:outline-blue-700"
         />
 
         <button type="submit" className="btn-primary mt-8 font-semibold">
