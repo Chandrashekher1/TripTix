@@ -8,10 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline } from "react-icons/io5";
 import { FaWifi, FaBolt } from 'react-icons/fa';
 import { MdAcUnit, MdOutlineTheaters } from 'react-icons/md';
+import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
 
 const AvailableBus = () => {
   const searchData = useBus();
   const [buses, setBuses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleSeat = (id) => {
@@ -28,6 +31,8 @@ const AvailableBus = () => {
         setBuses(json);
       } catch (err) {
         console.error("Error fetching bus:", err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -49,6 +54,16 @@ const AvailableBus = () => {
     return `${hours}h ${minutes}m`;
   };
 
+  const renderSkeleton = () => (
+    <Box className="max-w-5xl mx-auto mb-6 p-4 bg-[#0f172a] rounded-xl border border-gray-800">
+      <Skeleton variant="text" width={150} height={30} sx={{ bgcolor: 'grey.600' }} />
+      <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: 'grey.600', my: 1 }} />
+      <Skeleton variant="rectangular" height={40} sx={{ bgcolor: 'grey.600', my: 2 }} />
+      <Skeleton variant="text" width={200} height={30} sx={{ bgcolor: 'grey.600', my: 1 }} />
+      <Skeleton variant="rectangular" height={40} sx={{ bgcolor: 'grey.600', mt: 2 }} />
+    </Box>
+  );
+
   return (
     <div className="bg-gray-950 py-4 px-2 md:px-12 border-b border-b-gray-800">
       <div className='bg-gray-900 text-gray-300 rounded-md p-3 flex items-center flex-wrap gap-2 justify-center mb-4 border border-gray-700'>
@@ -59,7 +74,9 @@ const AvailableBus = () => {
         <span className='text-sm ml-4'>Date: {searchData?.routeDetails.date}</span>
       </div>
 
-      {buses.length === 0 ? (
+      {loading ? (
+        Array.from({ length: 3 }).map((_, i) => <div key={i}>{renderSkeleton()}</div>)
+      ) : buses.length === 0 ? (
         <p className="text-center text-white bg-gray-800 py-8 rounded-md">No buses available for this route.</p>
       ) : (
         buses.map((bus, index) => (
