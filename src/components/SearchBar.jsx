@@ -18,7 +18,6 @@ const SearchBar = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
     setRouteDetails({ origin, destination, date });
 
     try {
@@ -38,7 +37,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className='mx-4 bg-[#060e23] shadow-xl border rounded-lg border-gray-700 px-4 md:flex flex-col items-center py-8 md:mx-40 mb-20'>
+    <div className='mx-4 bg-[#060e23] shadow-xl border rounded-lg border-gray-900 px-4 md:flex flex-col items-center py-8 md:mx-40 mb-20'>
       <div>
           <form onSubmit={handleSearch} className='flex flex-col  md:flex-row flex-wrap'>
         <div>
