@@ -65,16 +65,16 @@ const Profile = () => {
         window.location.href = '/login'
     }
   return (
-    <div className='home'>
+    <div className='py-2 border-b border-b-gray-700'>
         <div className='flex items-center justify-center flex-col py-8'>
             <span className='rounded-full p-4 bg-gradient-to-r from-blue-500 to-teal-500'>{<LuUser style={{fontSize:'40px'}}/>}</span>
-            <h1 className='font-bold text-3xl my-4 text-gray-900'>{data.name}</h1>
-            <p className='flex text-gray-700'>{data.email} <span className='mx-4'> <li>{data.phone}</li></span></p>
+            <h1 className='font-bold text-3xl my-4 text-white'>{data.name}</h1>
+            <p className='flex text-gray-400'>{data.email} <span className='mx-4'> <li>{data.phone}</li></span></p>
         </div>
-        <div className='flex mx-4 my-4 text-gray-700 border border-transparent bg-blue-50 py-1 rounded-md justify-around md:mx-60'>
+        <div className='flex mx-4 my-4 text-gray-700 border border-transparent bg-gray-900 py-1 rounded-md justify-around md:mx-60'>
             <button
                 className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${
-                isprofile ? 'bg-white text-black' : 'bg-transparent'
+                isprofile ? 'bg-[#060e23] text-white' : 'bg-transparent'
                 }`}
                 onClick={() => setIsProfile(true)}
             >
@@ -82,7 +82,7 @@ const Profile = () => {
             </button>
             <button
                 className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${
-                !isprofile ? 'bg-white text-black' : 'bg-transparent'
+                !isprofile ? 'bg-[#060e23] text-white' : 'bg-transparent'
                 }`}
                 onClick={() => setIsProfile(false)}
             >
@@ -91,30 +91,30 @@ const Profile = () => {
         </div>
 
         <div className='mx-4 my-4 md:my-8 md:mx-60'>
-            {!isprofile && <div className='bg-white border border-transparent shadow-md px-4 rounded-md'>
-                <h1 className='font-semibold text-xl my-4'>Personal Information</h1>
+            {!isprofile && <div className='bg-[#060e23] text-white border border-transparent shadow-md px-4 rounded-md'>
+                <h1 className='font-semibold text-2xl my-4'>Personal Information</h1>
                 <div className='my-4'>
-                    <label htmlFor="" className='text-gray-700 font-semibold'>Full Name</label>
+                    <label htmlFor="" className='text-gray-400 font-semibold'>Full Name</label>
                     {editMode ? (
                         <input value={editName} 
                             onChange={(e) => setEditName(e.target.value)}
-                            className='border w-full px-2 py-1 rounded-md my-2'
+                            className='border w-full px-2 py-1 rounded-md my-2 text-gray-400'
                          />
-                    ) : <p className='text-gray-700'>{data?.name}</p>}
-                    <label htmlFor="" className='text-gray-700 font-semibold mt-12'>Email</label>
+                    ) : <p className='text-gray-100'>{data?.name}</p>}
+                    <label htmlFor="" className='text-gray-400 font-semibold mt-12'>Email</label>
                     {editMode ? (
                         <input value={editEmail} 
                             onChange={(e) => setEditEmail(e.target.value)}
-                            className='border w-full px-2 py-1 rounded-md my-2'
+                            className='border w-full px-2 py-1 rounded-md my-2 text-gray-400'
                          />
-                    ) : <p className='text-gray-700'>{data?.email}</p>}
-                    <label htmlFor="" className='font-semibold text-gray-700'>Phone</label>
+                    ) : <p className='text-gray-100'>{data?.email}</p>}
+                    <label htmlFor="" className='font-semibold text-gray-400'>Phone</label>
                     {editMode ? (
                         <input value={editPhone} 
                             onChange={(e) => setEditPhone(e.target.value)}
-                            className='border w-full px-2 py-1 rounded-md my-2'
+                            className='border w-full px-2 py-1 rounded-md my-2 text-gray-400'
                          />
-                    ) : <p className='text-gray-700'>{data?.phone}</p>}
+                    ) : <p className='text-gray-100'>{data?.phone}</p>}
                 </div>
                 <div className='flex justify-between items-center'>
                     
@@ -127,7 +127,7 @@ const Profile = () => {
                 </div>
 
             </div>}
-            {isprofile && <div className=' bg-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md '>
+            {isprofile && <div className=' bg-[#060e23] text-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md '>
                 {/* <div className='flex justify-between'>
                     <h1 className='flex flex-col font-semibold text-lg'>Swift Travels <span className='text-sm text-gray-700'>Booking ID : RR12345678</span></h1>
                     <p className='bg-red-100 font-semibold py-2 rounded-full text-red-700 px-4'>Cancelled</p>
