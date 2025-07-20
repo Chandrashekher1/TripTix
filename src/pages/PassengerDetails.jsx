@@ -18,8 +18,6 @@ const PassengerDetails = () => {
       }))
   )
   const socket = io("https://triptix-backend-4ryx.onrender.com/")
-
-
   useEffect(() => {
     
     const fetchBusDetails = async () => {
@@ -127,75 +125,96 @@ const PassengerDetails = () => {
 
     return `${hours}h ${minutes}m`;
   }
+
+  const isFormValid = () => {
+    return passengerDetails.every(passenger =>
+      passenger.name.trim() !== '' &&
+      passenger.age &&
+      passenger.gender !== ''
+    );
+  };
+
   
   return (
-    <div className='home py-8 px-4'>
+    <div className='bg-gray-950 py-8 px-4 border-b border-b-gray-800'>
       <div className='flex justify-between md:justify-normal md:mx-40'>
-        <p className='flex font-semibold cursor-pointer' onClick={() => navigate('/available-seat')}>
+        <p className='flex font-semibold cursor-pointer text-white hover:border rounded-lg border-transparent px-4 hover:bg-gray-900' onClick={() => navigate('/available-seat')}>
           <IoIosArrowRoundBack style={{ marginRight: '8px', fontSize: '30px' }} /> Back to Buses
         </p>
-        <h1 className='flex flex-col font-bold text-2xl md:mx-16'>
-          Passenger Details <span className='text-lg font-medium text-gray-700'>Fill details for all passengers</span>
+        <h1 className='flex flex-col font-bold text-2xl md:mx-16 text-white'>
+          Passenger Details <span className='text-lg font-medium text-gray-400'>Fill details for all passengers</span>
         </h1>
       </div>
 
       <div className='md:mx-40 md:flex md:gap-8'>
-        <div className='flex flex-col gap-6 md:w-2/3'>
+        <div className='flex flex-col gap-6 md:w-2/3 my-2'>
         {state?.selectedSeats?.map((seat, index) => (
-          <form key={seat} className="bg-white py-8 shadow rounded-md px-4 md:px-8">
-            <div className="my-4">
-              <p className="font-semibold flex items-center">
-                <LuUser className="text-blue-600 text-xl mr-2" />
-                Passenger {index + 1} 
-              </p>
+          <form key={seat} className="bg-gray-900 rounded-xl p-6 text-white shadow-md">
+            <p className="font-semibold text-lg mb-4 flex items-center gap-2 text-white">
+              <LuUser className="text-xl text-blue-400" />
+              Passenger {index + 1} 
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold mb-1">Full Name *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter full name"
+                  value={passengerDetails[index].name}
+                  onChange={(e) => {
+                    const updated = [...passengerDetails];
+                    updated[index].name = e.target.value;
+                    setPassengerDetails(updated);
+                  }}
+                  className="w-full px-4 py-2 rounded-md bg-gray-900 border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-1">Age *</label>
+                <input
+                  type="number"
+                  required
+                  placeholder="Enter age"
+                  value={passengerDetails[index].age}
+                  onChange={(e) => {
+                    const updated = [...passengerDetails];
+                    updated[index].age = e.target.value;
+                    setPassengerDetails(updated);
+                  }}
+                  className="w-full px-4 py-2 rounded-md bg-gray-900 border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-1">Gender *</label>
+                <select
+                  required
+                  value={passengerDetails[index].gender}
+                  onChange={(e) => {
+                    const updated = [...passengerDetails];
+                    updated[index].gender = e.target.value;
+                    setPassengerDetails(updated);
+                  }}
+                  className="w-full px-4 py-2 rounded-md bg-gray-900 border border-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" disabled>Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              
             </div>
-            <label className="font-semibold my-2">Full Name</label>
-            <input
-              type="text"
-              required
-              placeholder="Enter full name"
-              value={passengerDetails[index].name}
-              onChange={(e) => {
-                const updated = [...passengerDetails];
-                updated[index].name = e.target.value;
-                setPassengerDetails(updated);
-              }}
-              className="px-4 py-2 rounded-md border border-blue-100 w-full"
-            />
-
-            <label className="font-semibold my-2">Age</label>
-            <input
-              type="number"
-              required
-              placeholder="Age"
-              value={passengerDetails[index].age}
-              onChange={(e) => {
-                const updated = [...passengerDetails];
-                updated[index].age = e.target.value;
-                setPassengerDetails(updated);
-              }}
-              className="px-4 py-2 rounded-md border border-blue-100 w-full"
-            />
-
-            <label className="font-semibold my-2">Gender</label>
-            <input
-              type="text"
-              required
-              placeholder="Gender"
-              value={passengerDetails[index].gender}
-              onChange={(e) => {
-                const updated = [...passengerDetails];
-                updated[index].gender = e.target.value;
-                setPassengerDetails(updated);
-              }}
-              className="px-4 py-2 rounded-md border border-blue-100 w-full"
-            />
           </form>
+
         ))}
 
         </div>
 
-        <div className='bg-white rounded-md p-6 shadow mt-8 md:mt-0 md:w-1/3 h-fit sticky top-24'>
+        <div className='bg-gray-900 text-white rounded-md p-6 shadow mt-8 md:mt-0 md:w-1/3 h-fit sticky top-24'>
           <h1 className='font-semibold text-2xl mb-4'>Booking Summary</h1>
           <p className='text-lg font-semibold'>{`${BusDetails.operator || ''} - ${BusDetails.busType || ''}`}</p>
 
@@ -210,7 +229,15 @@ const PassengerDetails = () => {
             <p className='flex justify-between my-2 font-bold text-xl'>Total <span className='text-blue-700'>₹{BusDetails.price * state.selectedSeats.length}</span></p>
           </div>
 
-          <button className='btn-primary w-full mt-4 cursor-pointer'  onClick={handlePayment}>Proceed to Payment</button>
+            <button
+            className={`btn-primary w-full mt-4 cursor-pointer ${
+              !isFormValid() ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            onClick={handlePayment}
+            disabled={!isFormValid()}
+            >
+            Proceed to Payment
+          </button>
         </div>
       </div>
     </div>
