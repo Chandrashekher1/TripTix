@@ -118,7 +118,7 @@ const Login = () => {
           className="border px-4 py-2 rounded-md border-gray-700 focus:outline-blue-700"
         />
 
-        <button type="submit" className="btn-primary mt-8 font-semibold">
+        <button type="submit" className="btn-primary mt-8 font-semibold cursor-pointer">
           {isLogin ? 'Sign In' : 'Sign Up'}
         </button>
         
