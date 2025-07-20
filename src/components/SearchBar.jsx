@@ -38,29 +38,29 @@ const SearchBar = () => {
   };
 
   return (
-    <div className='mx-4 bg-white shadow-xl border rounded-md border-transparent px-8 py-8 md:mx-40'>
+    <div className='mx-4 bg-[#060e23] shadow-xl border rounded-lg border-gray-700 px-4 md:flex flex-col items-center py-8 md:mx-40 mb-20'>
       <div>
           <form onSubmit={handleSearch} className='flex flex-col  md:flex-row flex-wrap'>
         <div>
-          <label className='flex text-lg font-semibold text-gray-700 my-2'>
-            <IoLocationOutline style={{ marginTop: '4px', color: "blue", marginRight: '4px' }} /> From
+          <label className='flex text-lg font-semibold text-white my-2'>
+            <IoLocationOutline style={{ marginTop: '4px', color: "blue", marginRight: '4px', fontSize:'20px' }} /> From
           </label>
           <input
             type="text"
             value={origin}
             onChange={(e) => setOrigin(e.target.value)}
             placeholder='Departure city'
-            className='border px-4 py-3 rounded-md border-gray-400'
+            className='border px-4 py-3 rounded-md border-gray-700 bg-black text-gray-400 focus:outline-blue-700'
             required
           />
         </div>
 
-        <div className='flex justify-center items-center my-4 md:mx-4'>
+        <div className='flex justify-center items-center ml-4'>
           <FaArrowRight style={{ color: 'blue' , marginTop:'20px' }} />
         </div>
 
-        <div className='md:mx-16'>
-          <label className='flex text-lg font-semibold text-gray-700 my-2'>
+        <div className='md:mx-8'>
+          <label className='flex text-lg font-semibold text-white my-2'>
             <IoLocationOutline style={{ marginTop: '4px', color: 'green', marginRight: '4px' }} /> To
           </label>
           <input
@@ -68,13 +68,13 @@ const SearchBar = () => {
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             placeholder='Destination city'
-            className='border px-4 py-3 rounded-md border-gray-400'
+            className='border px-4 py-3 rounded-md border-gray-800 bg-black text-gray-400 focus:outline-blue-700'
             required
           />
         </div>
 
         <div>
-          <label className='flex text-gray-700 font-semibold my-2'>
+          <label className='flex text-white font-semibold my-2'>
             <MdOutlineCalendarToday style={{ marginTop: '4px', marginRight: '2px' }} /> Journey Date
           </label>
           <input
@@ -84,7 +84,7 @@ const SearchBar = () => {
             min={new Date().toISOString().split("T")[0]}
             placeholder='Select date'
             onChange={(e) => setDate(e.target.value)}
-            className='border px-4 md:px-12 py-3 rounded-md border-gray-400'
+            className='border px-4 py-3 rounded-md border-gray-800 bg-black text-gray-400 focus:outline-blue-700'
             required
           />
         </div>
@@ -98,7 +98,7 @@ const SearchBar = () => {
       </div>
       <div>
             <div>
-              <h3 className='font-semibold text-gray-600'>Popular Routes</h3>
+              <h3 className='font-semibold text-white'>Popular Routes:</h3>
         <div className='flex flex-wrap gap-2'>
           <button
             type="button"
@@ -106,7 +106,7 @@ const SearchBar = () => {
               setOrigin('Delhi');
               setDestination('Dehradun');
             }}
-            className='flex border border-transparent rounded-full px-4 py-1 bg-blue-100 text-blue-700 font-semibold md:my-2'
+            className='flex border border-transparent rounded-md cursor-pointer hover:px-4 py-1 hover:bg-gray-800 hover:text-white text-blue-700 font-semibold md:my-2'
           >
             Delhi <IoIosArrowRoundForward style={{ marginTop: '4px', marginLeft: '4px', marginRight: '4px' }} /> Dehradun
           </button>
