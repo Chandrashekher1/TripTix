@@ -75,27 +75,27 @@ const SeatSelection = () => {
     navigate('/passenger-details', { state: { busId, selectedSeats } })
   }
   return (
-    <div className='home px-6 md:px-12 py-6 md:py-12'>
+    <div className='px-6 md:px-12 md:py-12 bg-gray-950'>
       <div className='flex flex-col md:flex-row md:justify-between items-start md:items-center mb-6 gap-4 md:px-24'>
-        <p className='flex items-center text-blue-600 font-medium cursor-pointer hover:underline' onClick={() => navigate('/available-seat')}>
+        <p className='flex items-center text-white font-medium cursor-pointer hover:border rounded-lg border-transparent px-4 py-2 hover:bg-gray-900' onClick={() => navigate('/available-seat')}>
           <IoIosArrowRoundBack className='text-2xl md:mr-2' /> Back to Buses
         </p>
         <div>
-          <h1 className='font-bold text-2xl md:text-3xl'>{selectedBus?.operator || "Bus"}</h1>
-          <span className='text-gray-600 text-base md:text-lg'>
+          <h1 className='font-bold text-2xl md:text-3xl text-white'>{selectedBus?.operator || "Bus"}</h1>
+          <span className='text-gray-400 text-base md:text-lg'>
             {selectedBus?.isAc ? 'AC' : ''} {selectedBus?.isSleeper ? 'Sleeper' : ''}
           </span>
         </div>
       </div>
 
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-        <div className='bg-white p-6 md:p-8 rounded-md shadow-lg col-span-2'>
-          <h1 className='text-center text-xl md:text-2xl font-semibold mb-4'>Select Your Seats</h1>
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 '>
+        <div className='bg-gray-900 p-6 md:p-8 rounded-md shadow-lg col-span-2'>
+          <h1 className='text-center text-xl md:text-3xl font-bold mb-4 text-white'>Select Your Seats</h1>
 
           <div className='flex gap-6 justify-center mb-6 text-sm md:text-base'>
-            <p><span className='inline-block w-4 h-4 bg-green-500 rounded mr-2'></span>Available</p>
-            <p><span className='inline-block w-4 h-4 bg-blue-600 rounded mr-2'></span>Selected</p>
-            <p><span className='inline-block w-4 h-4 bg-gray-500 rounded mr-2'></span>Booked</p>
+            <p className='text-white'><span className='inline-block w-4 h-4 bg-green-500 rounded mr-2'></span>Available</p>
+            <p className='text-white'><span className='inline-block w-4 h-4 bg-blue-600 rounded mr-2'></span>Selected</p>
+            <p className='text-white'><span className='inline-block w-4 h-4 bg-gray-500 rounded mr-2'></span>Booked</p>
           </div>
 
           <div className='flex flex-col items-center mb-6 p-4 bg-gray-100 rounded-md'>
@@ -128,16 +128,16 @@ const SeatSelection = () => {
           )}
         </div>
 
-        <div className='bg-white p-6 md:p-8 rounded-md shadow-xl h-fit'>
+        <div className='bg-gray-900 text-white p-6 md:p-8 rounded-md shadow-xl h-fit'>
           <h2 className='font-semibold text-xl md:text-2xl mb-4'>Booking Summary</h2>
 
           <div className='mb-4'>
-            <p className='font-semibold mb-2'>Selected Seats</p>
+            <p className='font-semibold mb-2 '>Selected Seats</p>
             <div className='flex flex-wrap gap-2'>
               {selectedSeats.length > 0 ? (
                 selectedSeats.map((seat) => (
 
-                  <span key={seat} className='bg-gray-100 px-3 py-1 rounded-2xl font-semibold text-sm'>
+                  <span key={seat} className='bg-gray-800 px-3 py-1 rounded-2xl font-semibold text-sm'>
                     {`Seat ${seats.find(s => s._id === seat)?.seatNumber || seat}`}
                   </span>
                 ))
