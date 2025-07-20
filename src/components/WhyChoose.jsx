@@ -1,27 +1,72 @@
 import React from 'react'
-import { MdOutlineSecurity } from "react-icons/md";
-import { MdOutlineWatchLater } from "react-icons/md";
-import { FaRegStar } from "react-icons/fa";
+import { MdOutlineSecurity, MdPayment } from "react-icons/md";
+import { FaRobot } from "react-icons/fa6";
+import { IoLocationOutline, IoReload } from "react-icons/io5";
+import { CiMobile2 } from "react-icons/ci";
+import { FiUsers } from "react-icons/fi";
+
 const WhyChoose = () => {
   return (
-    <div className='mx-4 md:flex flex-wrap md:mx-16 justify-center items-center my-8 md:h-80'>
-        <div className='flex flex-col justify-center items-center md:mx-4 md:w-80'>
-            <span className='rounded-full p-4 bg-blue-100'><MdOutlineSecurity style={{color:'blue', fontSize:'40px'}}/></span>
-            <h2 className='text-center font-semibold text-xl my-4'>Safe & Secure</h2>
-            <p className='text-center text-gray-700 '>Your safety is our priority with verified operators and secure payments</p>
+    <div className="px-4 py-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-blue-400 inline-block">
+            <MdOutlineSecurity style={{ color: 'blue', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">Live Seat Locking</h3>
+          <p className="text-gray-400">Real-time seat reservation with instant confirmation. Never lose your preferred seat to someone else.</p>
         </div>
-       <div className='flex flex-col justify-center items-center my-4 md:w-80'>
-            <span className='rounded-full p-4 bg-green-100'><MdOutlineWatchLater style={{color:'green', fontSize:'40px'}}/></span>
-            <h2 className='text-center font-semibold text-xl my-4'>On-Time Service</h2>
-            <p className='text-center text-gray-700'>Real-time tracking ensures you never miss your bus</p>
-        </div>
-        <div className='flex flex-col justify-center items-center my-4 md:w-80'>
-            <span className='rounded-full p-4 bg-orange-100'><FaRegStar style={{color:'orange', fontSize:'40px'}}/></span>
-            <h2 className='text-center font-semibold text-xl my-4'>Best Prices</h2>
-            <p className='text-center text-gray-700'>Compare  prices and get best deals on every route</p>
-        </div>
-    </div>
-  )
-}
 
-export default WhyChoose
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-gray-900 inline-block">
+            <FaRobot style={{ color: 'gray', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">ChatBot Help</h3>
+          <p className="text-gray-400">Help is just a message away—24/7 chatbot for smooth and stress-free support.</p>
+        </div>
+
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-blue-400 inline-block">
+            <IoLocationOutline style={{ color: 'blue', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">Real-time Bus Tracking</h3>
+          <p className="text-gray-400">Track your bus location live with GPS accuracy. Know exactly when your bus will arrive.</p>
+        </div>
+
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-orange-100 inline-block">
+            <MdPayment style={{ color: 'orange', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">Secure Payment Gateway</h3>
+          <p className="text-gray-400">Multiple payment options with bank-level security. Pay confidently using your preferred method.</p>
+        </div>
+
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-blue-400 inline-block">
+            <CiMobile2 style={{ color: 'blue', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">User-friendly Interface</h3>
+          <p className="text-gray-400">Intuitive design that works perfectly on all devices. Book tickets in just a few taps.</p>
+        </div>
+
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-orange-100 inline-block">
+            <FiUsers style={{ color: 'orange', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">Secure Login & Signup</h3>
+          <p className="text-gray-400">Your data is protected with encryption. Quick login via Google or other methods.</p>
+        </div>
+
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+          <span className="rounded-full p-4 bg-red-300 inline-block">
+            <IoReload style={{ color: 'red', fontSize: '40px' }} />
+          </span>
+          <h3 className="text-white text-xl font-semibold my-4">Easy Cancellation</h3>
+          <p className="text-gray-400">Cancel anytime with instant refunds. Transparent cancellation policies for peace of mind.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WhyChoose;
