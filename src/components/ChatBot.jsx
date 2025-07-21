@@ -74,7 +74,7 @@ const ChatBot = () => {
     <div className="fixed bottom-4 right-4 z-50">
       {isOpen ? (
         <div className="w-[340px] h-[460px]  rounded-2xl shadow-2xl flex flex-col border border-gray-900">
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex justify-between items-center rounded-t-2xl">
+          <div className="btn-primary text-white p-4 flex justify-between items-center rounded-t-2xl">
             <h3 className="font-bold text-lg">TripTix Assistant</h3>
             <IoClose className="cursor-pointer text-2xl" onClick={() => setIsOpen(false)} />
           </div>
@@ -119,7 +119,7 @@ const ChatBot = () => {
             />
             <button
               onClick={handleAsk}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition cursor-pointer"
+              className="btn-primary text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition cursor-pointer"
             >
               Ask
             </button>
