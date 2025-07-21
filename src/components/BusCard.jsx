@@ -60,13 +60,13 @@ const BusCard = () => {
   );
 
   return (
-    <div className="mx-4 flex flex-wrap justify-center md:p-16 bg-gray-950">
+    <div className="md:mx-4 flex flex-wrap justify-center md:p-16 bg-gray-950">
       {loading
         ? [...Array(3)].map((_, index) => renderSkeletonCard(index))
         : listOfBuses.map((bus, index) => (
           <div
             key={index}
-            className="w-96 shadow-lg bg-[#060e23] hover:shadow-2xl cursor-pointer mx-4 my-4 p-2 rounded-lg border border-gray-900 transition duration-300 hover:-translate-y-1"
+            className="w-96 shadow-lg bg-[#060e23] hover:shadow-2xl cursor-pointer md:mx-4 mx-2 my-4 md:p-2 rounded-lg border border-gray-900 transition duration-300 hover:-translate-y-1"
           >
             <div className="p-4">
               <h1 className="font-semibold text-lg text-white">{bus?.operator || "Luxury Express"}</h1>
