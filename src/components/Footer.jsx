@@ -11,7 +11,7 @@ const Footer = () => {
     <div className='dark bg-gray-950 px-4 py-8 md:flex flex-col justify-around md:px-16 '>
         <div className='md:flex justify-around '>
             <div className='md:w-80'>
-            <h2 className='text-white font-bold text-3xl flex'><span><LuBus style={{color: 'blue' , fontSize:'30px' , marginTop:'4', marginRight:'6px'}}/></span>TripTix</h2>
+            <h2 className='text-white font-bold text-3xl flex btn-secondary'><span><LuBus style={{color: 'blue' , fontSize:'30px' , marginTop:'4', marginRight:'6px'}}/></span>TripTix</h2>
             <p className='text-gray-400 my-4 '>Your trusted partner for Comfortable and safe bus travel across the country. Book your Journeywith confidence.</p>
             <SocialIcons/>
         </div>
