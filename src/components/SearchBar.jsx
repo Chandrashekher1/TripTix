@@ -73,7 +73,7 @@ const SearchBar = () => {
         </div>
 
         <div>
-          <label className='flex text-white font-semibold my-2'>
+          <label className='flex text-lg font-semibold text-white my-2'>
             <MdOutlineCalendarToday style={{ marginTop: '4px', marginRight: '2px' }} /> Journey Date
           </label>
           <input
@@ -88,7 +88,7 @@ const SearchBar = () => {
           />
         </div>
 
-        <button className='btn-primary flex font-semibold my-8 justify-center md:mx-8 md:my-10 cursor-pointer hover:bg-blue-700' type='submit'>
+        <button className='btn-primary flex font-semibold my-8 justify-center md:mx-8 md:my-12 cursor-pointer hover:bg-blue-700' type='submit'>
           <CiSearch style={{ fontSize: '20px', marginRight: '8px' }} /> Search Buses
         </button>
 
@@ -96,8 +96,8 @@ const SearchBar = () => {
       </form>
       </div>
       <div>
-            <div>
-              <h3 className='font-semibold text-white'>Popular Routes:</h3>
+        <div>
+          <h3 className='font-semibold text-white'>Popular Routes:</h3>
         <div className='flex flex-wrap gap-2'>
           <button
             type="button"
@@ -105,7 +105,7 @@ const SearchBar = () => {
               setOrigin('Delhi');
               setDestination('Dehradun');
             }}
-            className='flex border border-transparent rounded-md cursor-pointer hover:px-4 py-1 hover:bg-gray-800 hover:text-white text-blue-700 font-semibold md:my-2'
+            className='flex border border-transparent rounded-md cursor-pointer px-2 py-1 hover:bg-gray-800 bg-gray-900 hover:text-white text-blue-700 font-semibold md:my-2'
           >
             Delhi <IoIosArrowRoundForward style={{ marginTop: '4px', marginLeft: '4px', marginRight: '4px' }} /> Dehradun
           </button>
