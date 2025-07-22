@@ -9,7 +9,7 @@ const WhyChoose = () => {
   return (
     <div className="px-4 py-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full md:p-4 p-3 bg-blue-400 inline-block">
             <MdOutlineSecurity className='md:text-4xl text-xl text-blue-600' />
           </span>
@@ -17,7 +17,7 @@ const WhyChoose = () => {
           <p className="text-gray-400">Real-time seat reservation with instant confirmation. Never lose your preferred seat to someone else.</p>
         </div>
 
-        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full p-4 bg-gray-900 inline-block">
             <FaRobot className='md:text-4xl text-xl text-gray-600' />
           </span>
@@ -25,7 +25,7 @@ const WhyChoose = () => {
           <p className="text-gray-400">Help is just a message away—24/7 chatbot for smooth and stress-free support.</p>
         </div>
 
-        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full p-4 bg-blue-400 inline-block">
             <IoLocationOutline className='md:text-4xl text-2xl text-blue-700'  />
           </span>
@@ -33,7 +33,7 @@ const WhyChoose = () => {
           <p className="text-gray-400">Track your bus location live with GPS accuracy. Know exactly when your bus will arrive.</p>
         </div>
 
-        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full p-4 bg-orange-100 inline-block">
             <MdPayment className='md:text-4xl text-2xl text-orange-700' />
           </span>
@@ -41,7 +41,7 @@ const WhyChoose = () => {
           <p className="text-gray-400">Multiple payment options with bank-level security. Pay confidently using your preferred method.</p>
         </div>
 
-        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] p-6 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full p-4 bg-blue-300 inline-block">
             <CiMobile2 className='md:text-4xl text-2xl text-blue-700' />
           </span>
@@ -49,7 +49,7 @@ const WhyChoose = () => {
           <p className="text-gray-400">Intuitive design that works perfectly on all devices. Book tickets in just a few taps.</p>
         </div>
 
-        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full p-4 bg-orange-100 inline-block">
             <FiUsers className='md:text-4xl text-2xl text-orange-700' />
           </span>
@@ -57,7 +57,7 @@ const WhyChoose = () => {
           <p className="text-gray-400">Your data is protected with encryption. Quick login via Google or other methods.</p>
         </div>
 
-        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-10 transition-all duration-300">
+        <div className="bg-[#060e23] md:p-6 p-4 rounded-xl border border-gray-800 hover:-translate-y-1 hover:z-0 transition-all duration-300">
           <span className="rounded-full p-4 bg-red-300 inline-block">
             <IoReload className='md:text-4xl text-2xl text-red-700' />
           </span>
