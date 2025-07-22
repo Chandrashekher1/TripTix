@@ -14,14 +14,6 @@ const TrackBus = () => {
                 <button className='btn-primary flex font-semibold mx-4 cursor-pointer'><CiSearch style={{marginTop:'4px', marginRight:'4px', fontSize:'20px'}}/> Track</button>
             </form>
         </div>
-        <div className='border border-blue-200 rounded-md bg-blue-50 p-6'>
-            <p className='text-blue-700 font-semibold my-2'>Try these sample tracking IDs:</p>
-            <div className='flex flex-wrap'>
-                <button className='border rounded-full bg-blue-100 p-1 text-blue-700 px-4 border-transparent mx-2'>RR12345678</button>
-                <button className='border rounded-full bg-blue-100 p-1 text-blue-700 px-4 border-transparent mx-2'>RR12345678</button>
-                <button className='border rounded-full bg-blue-100 p-1 text-blue-700 px-4 border-transparent mx-2 my-2'>RR12345678</button>
-            </div>
-        </div>
         </div>
     </div>
   )
