@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('userId', newUser);
     setToken(newToken);
     setUserId(newUser)
-  };
+  }
 
   const logout = () => {
     localStorage.removeItem('authorization');
