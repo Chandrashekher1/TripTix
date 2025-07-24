@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { FiUser } from 'react-icons/fi';
-import { token, Bus_API, Seat_API } from '../utils/constant';
+import {Bus_API, Seat_API } from '../utils/constant';
 import { io } from 'socket.io-client';
+import AuthContext from '../context/AuthContext';
 
 const SeatSelection = () => {
   const { id: busId } = useParams();
@@ -13,6 +14,7 @@ const SeatSelection = () => {
   const [selectedBus, setSelectedBus] = useState(null);
   const [message, setMessage] = useState('');
   const socket = io("https://triptix-backend-4ryx.onrender.com/")
+  const {token} = useContext(AuthContext)
 
   if(!token){
     alert("Please login to book seats");
