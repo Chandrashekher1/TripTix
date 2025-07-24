@@ -66,7 +66,7 @@ const BusCard = () => {
         : listOfBuses.map((bus, index) => (
           <div
             key={index}
-            className="w-96 shadow-lg bg-[#060e23] hover:shadow-2xl cursor-pointer md:mx-4 mx-2 my-4 md:p-2 rounded-lg border border-gray-900 transition duration-300 hover:-translate-y-1"
+            className="w-96 shadow-lg bg-[#060e23]  border-cyan-950 cursor-pointer md:mx-4 mx-2 my-4 md:p-2 rounded-lg border transition duration-300 hover:-translate-y-1"
           >
             <div className="p-4">
               <h1 className="font-semibold text-lg text-white">{bus?.operator || "Luxury Express"}</h1>
@@ -96,7 +96,7 @@ const BusCard = () => {
                   <span className='text-gray-400 text-sm block'>per person</span>
                 </p>
                 <button
-                  className="btn-primary hover:scale-105 cursor-pointer text-black font-bold py-2 px-4 rounded-full transition-all"
+                  className="bg-[#21d3ed] shadow-md shadow-[#21d3ed] hover:scale-105 cursor-pointer text-black font-semibold py-2 px-4 rounded-full transition-all"
                   onClick={() => handleBookNow(bus)}
                 >
                   Book Now
