@@ -1,30 +1,91 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { LuBus, LuUser } from "react-icons/lu";
-import { BsBrightnessHigh } from "react-icons/bs";
-import { FaRegMoon } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
-import { token } from '../utils/constant';
-
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import Box from '@mui/material/Box';
+import Login from './Login';
+import AuthContext from '../context/AuthContext';
 
 const Navbar = () => {
-  return (
-    <div className='flex dark'>
-        <div className='flex  rounded-md px-4 py-2 text-blue-700 font-semibold btn-primary cursor-pointer'>
-            <IoIosSearch style={{fontSize:'20px' , marginTop:'3px'}}/>
-            <Link className='mx-1 text-md' to="/">Search</Link>
-        </div>
-        <div className='flex  rounded-md px-4 py-2 hover:text-blue-700 mx-4 text-white'>
-            <LuBus style={{marginTop:'4', marginLeft:'4'}}/>
-            <Link className='mx-1 ' to="track-bus">Track Bus</Link>
-        </div>
-         <div className='flex borde rounded-md px-4 py-2 cursor-pointer text-white hover:text-blue-700'>
-            <LuUser style={{marginTop:'4', marginLeft:'4'}}/>
-            {token ? (<Link className='mx-1 text-md font-semibold' to="/profile"> Profile</Link>) : (<Link className='mx-1 text-md font-semibold' to="/login"> Sign In</Link>) }
-        </div>
-        
-    </div>
-  )
-}
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { token } = useContext(AuthContext);
 
-export default Navbar
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleProfileClick = () => {
+    if (token) {
+      navigate('/profile');
+    } else {
+      handleOpen();
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-4">
+      <Link
+        to="/"
+        className="hidden md:flex items-center rounded-md px-4 py-2 text-white hover:text-blue-500 font-medium transition"
+      >
+        <IoIosSearch className="text-xl mr-1" />
+        Search
+      </Link>
+
+      <Link
+        to="/track-bus"
+        className="hidden md:flex items-center rounded-md px-4 py-2 text-white hover:text-blue-500 font-medium transition"
+      >
+        <LuBus className="text-lg mr-1" />
+        Track Bus
+      </Link>
+
+      <Button
+        onClick={handleProfileClick}
+        variant="contained"
+        sx={{
+          background: 'linear-gradient(to right, #21d4fd, #00c9ff)',
+          color: '#fff',
+          px: 2.5,
+          py: 1.2,
+          textTransform: 'none',
+          fontWeight: 600,
+          borderRadius: '8px',
+          boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
+          '&:hover': {
+            background: 'linear-gradient(to right, #00c9ff, #21d4fd)',
+          },
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1
+        }}
+      >
+        <LuUser className="text-lg" />
+        {token ? 'Profile' : 'Sign In'}
+      </Button>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          sx: {
+            p: 3,
+            borderRadius: 3,
+            backgroundColor: '#060e23',
+            color: 'white',
+            minWidth: { xs: '90vw', sm: 400 },
+            maxWidth: '95vw'
+          }
+        }}
+      >
+        <Box>
+          {!token && <Login onClose={handleClose} />}
+        </Box>
+      </Dialog>
+    </div>
+  );
+};
+
+export default Navbar;
