@@ -14,8 +14,8 @@ const Profile = () => {
 
   const navigate = useNavigate();
   const id = localStorage.getItem('userId');
-  const { logout } = useContext(AuthContext);
-  const token = localStorage.getItem('authorization')
+  const { logout ,token } = useContext(AuthContext);
+  
   useEffect(() => {
     fetchUser();
   }, [])
