@@ -94,7 +94,7 @@ const SearchBar = () => {
 
         <button
           type='submit'
-          className='bg-[#21d3ed] flex items-center justify-center font-semibold my-8 py-2 px-4 rounded-md md:mx-8 md:my-12 cursor-pointer hover:bg-cyan-500 min-w-[150px]'
+          className='bg-[#21d3ed] shadow-md shadow-[#21d3ed] flex items-center justify-center font-semibold my-8 py-2 px-4 rounded-md md:mx-8 md:my-12 cursor-pointer hover:bg-cyan-500 min-w-[150px]'
         >
           {isLoading ? (
             <CircularProgress size={24} style={{ color: 'blue' }} />
