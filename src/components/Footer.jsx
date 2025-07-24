@@ -19,25 +19,10 @@ const Footer = () => {
         <div>
             <h1 className='text-2xl text-white my-4 font-bold'>Quick Links</h1>
             <ul className=''>
-                <li className='text-gray-400 my-2 hover:cursor-pointer hover:text-white'>Search Buses</li>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Track Bus</li>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>My Booking</li>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Cancel Ticket</li>
-                <li className='text-gray-400 hover:text-white hover:cursor-pointer'>Help & Support </li>
-
+                <Link to='/track-bus'><li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Track Bus</li></Link>
+                <Link to='/profile'><li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>My Booking</li></Link>
             </ul>
 
-        </div>
-        <div>
-            <h1 className='text-2xl text-white my-4 font-bold'>Popular Routes</h1>
-            <ul>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Search Buses</li>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Track Bus</li>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>My Booking</li>
-                <li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Cancel Ticket</li>
-                <li className='text-gray-400 hover:text-white hover:cursor-pointer'>Help & Support </li>
-
-            </ul>
         </div>
         <div>
             <h1 className='text-2xl text-white my-4 font-bold'>Contact Us</h1>
@@ -46,9 +31,9 @@ const Footer = () => {
             <p className='flex '><IoLocationOutline style={{marginTop:'4px', color:"teal", marginRight:'4px',fontSize:'20px'}}/><span className='text-gray-400'>123 Travel Street transport City, TC 12345</span></p>
         </div>
         </div>
-        <div className='border-t border-gray-900 text-gray-400 text-center my-8 md:flex justify-between'>
-            <p className='my-8'>@2025 TripTix. All rights reserved.</p>
-            <div className='my-8'>
+        <div className='border-t border-gray-900 text-gray-400 text-center mt-8 md:flex justify-between'>
+            <p className='mt-8'>@2025 TripTix. All rights reserved.</p>
+            <div className='mt-8'>
                 <Link className='mx-4 hover:text-white hover:cursor-pointer'>Privacy Policy</Link>
                 <Link className='hover:text-white hover:cursor-pointer'>Terms of Service</Link>
                 <Link className='mx-4 hover:text-white hover:cursor-pointer'>Cookies</Link>
