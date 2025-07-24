@@ -11,13 +11,11 @@ const Home = () => {
             <h1 className='font-bold text-4xl text-white'>Find Your Perfect Journey</h1>
             <p className='my-4 text-xl text-gray-400'>Book Comfortable bus tickets across the country with real-time seat selection</p>
         </div>
-        <SearchBar/>
-        {/* <div className=''>
-          <h1 className='text-center font-bold text-3xl'>Special Offers</h1>
-          <p className='text-center text-gray-700 my-4'>Don't mess out on these amazing deals</p>
 
-          <OfferCard/>
-        </div> */}
+        <div>
+            
+        </div>
+        <SearchBar/>
 
         <div className='bg-[#050b1c] py-4 my-8'>
           <div className='md:w-[60vw] md:mx-auto mx-4 flex flex-col items-center justify-center my-auto'>
