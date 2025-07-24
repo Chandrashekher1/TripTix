@@ -6,12 +6,15 @@ import { MdOutlineCalendarToday } from "react-icons/md";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { Bus_API, Route_API } from '../utils/constant';
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import useBus from '../hook/useBus';
 
 const SearchBar = () => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
+  const [isLoading,setIsLoading] = useState(false)
   const navigate = useNavigate();
 
   const { setBuses, setRouteDetails } = useBus(); 
@@ -19,6 +22,7 @@ const SearchBar = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setRouteDetails({ origin, destination, date });
+    setIsLoading(true)
 
     try {
       const routeResponse = await fetch(`${Route_API}origin=${origin}&destination=${destination}`);
@@ -88,11 +92,20 @@ const SearchBar = () => {
           />
         </div>
 
-        <button className='btn-primary flex font-semibold my-8 justify-center md:mx-8 md:my-12 cursor-pointer hover:bg-blue-700' type='submit'>
-          <CiSearch style={{ fontSize: '20px', marginRight: '8px' }} /> Search Buses
+        <button
+          type='submit'
+          className='bg-[#21d3ed] flex items-center justify-center font-semibold my-8 py-2 px-4 rounded-md md:mx-8 md:my-12 cursor-pointer hover:bg-cyan-500 min-w-[150px]'
+        >
+          {isLoading ? (
+            <CircularProgress size={24} style={{ color: 'blue' }} />
+          ) : (
+            <>
+              <CiSearch className='mr-2 text-black text-xl' />
+              <span className='text-black'>Search Buses</span>
+            </>
+          )}
         </button>
 
-        
       </form>
       </div>
       <div>
