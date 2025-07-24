@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { LuUser } from "react-icons/lu";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Booking_API, Bus_API, Razorpay_API, token } from '../utils/constant';
+import { Booking_API, Bus_API, Razorpay_API } from '../utils/constant';
 import { io } from 'socket.io-client';
+import AuthContext from '../context/AuthContext';
 
 const PassengerDetails = () => {
   const navigate = useNavigate()
@@ -18,6 +19,7 @@ const PassengerDetails = () => {
       }))
   )
   const socket = io("https://triptix-backend-4ryx.onrender.com/")
+  const {token} = useContext(AuthContext)
   useEffect(() => {
     
     const fetchBusDetails = async () => {
@@ -72,8 +74,6 @@ const PassengerDetails = () => {
         body: JSON.stringify({amount: BusDetails.price * state.selectedSeats.length})
       })
       const data = await res.json()
-      console.log(data);
-
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID, 
         amount: data.amount,
@@ -83,7 +83,6 @@ const PassengerDetails = () => {
         order_id: data.id,
         handler: function(response) {
           alert('Payment successful!');
-          console.log(response);
           if(response.razorpay_payment_id) {
             handleBooking()
           }
