@@ -50,12 +50,13 @@ const BusCard = () => {
   }
 
   const renderSkeletonCard = (index) => (
-    <Box key={index} sx={{ width: 360, margin: 2, padding: 2, backgroundColor: '#060e23', borderRadius: 2 }}>
-      <Skeleton variant="text" width="60%" height={30} sx={{ bgcolor: 'grey.600' }} />
-      <Skeleton variant="text" width="80%" height={25} sx={{ bgcolor: 'grey.600', my: 1 }} />
-      <Skeleton variant="rectangular" width="100%" height={40} sx={{ bgcolor: 'grey.600', my: 1 }} />
-      <Skeleton variant="text" width="50%" height={20} sx={{ bgcolor: 'grey.600', my: 1 }} />
-      <Skeleton variant="rectangular" width="100%" height={36} sx={{ bgcolor: 'grey.600', my: 2 }} />
+    <Box key={index} sx={{ width: 360, margin: 2, padding: 2, backgroundColor: '#f3f4f6', borderRadius: 2 }}>
+      <Skeleton variant="text" width="90%" height="0%" sx={{ bgcolor: 'grey.700' }} />
+      <Skeleton variant="text" width="60%" height={30} sx={{ bgcolor: 'grey.100' }} />
+      <Skeleton variant="text" width="80%" height={25} sx={{ bgcolor: 'grey.100', my: 1 }} />
+      <Skeleton variant="rectangular" width="100%" height={40} sx={{ bgcolor: 'grey.100', my: 1 }} />
+      <Skeleton variant="text" width="50%" height={20} sx={{ bgcolor: 'grey.100', my: 1 }} />
+      <Skeleton variant="rectangular" width="100%" height={36} sx={{ bgcolor: 'grey.100', my: 2 }} />
     </Box>
   );
 
@@ -91,7 +92,7 @@ const BusCard = () => {
                 {bus.isSeater && <p className="bg-green-100 text-[#059669] text-sm rounded-full px-2 py-1 mr-2">Seater</p>}
                 {bus.isWifi && <p className="bg-green-100 text-[#059669] text-sm rounded-full px-2 py-1 mr-2">WiFi</p>}
               </div>
-              <div className="flex justify-between items-center mt-4 border-t border-t-gray-700 pt-2">
+              <div className="flex justify-between items-center mt-4 border-t border-t-gray-200 pt-2">
                 <p className="flex flex-col font-bold text-2xl text-[#23a983]">
                   ₹{bus?.price || 0}
                   <span className='text-gray-700 text-sm font-semibold'>per person</span>
