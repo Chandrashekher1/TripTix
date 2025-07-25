@@ -60,43 +60,44 @@ const BusCard = () => {
   );
 
   return (
-    <div className="md:mx-4 flex flex-wrap justify-center md:p-16 bg-gray-950">
+    <div className="md:mx-4 flex flex-wrap justify-center md:p-16">
       {loading
         ? [...Array(3)].map((_, index) => renderSkeletonCard(index))
         : listOfBuses.map((bus, index) => (
           <div
             key={index}
-            className="w-96 shadow-lg bg-[#060e23]  border-cyan-950 cursor-pointer md:mx-4 mx-2 my-4 md:p-2 rounded-lg border transition duration-300 hover:-translate-y-1"
+            className="w-96 shadow-lg cursor-pointer md:mx-4 mx-2 my-4 md:p-2 rounded-lg border border-transparent transition duration-300 hover:-translate-y-1"
           >
             <div className="p-4">
-              <h1 className="font-semibold text-lg text-white">{bus?.operator || "Luxury Express"}</h1>
-              <p className="text-white font-semibold flex border px-2 py-2 rounded-md bg-gray-800 border-transparent shadow my-2">
-                <span className='mx-1 text-blue-800'><IoLocationOutline className='my-1 font-bold text-lg' /></span>
+              <img src="src/components/bus.png" alt="" className='rounded-md h-[30vh] w-full' />
+              <h1 className="font-semibold text-lg">{bus?.operator || "Luxury Express"}</h1>
+              <p className="font-semibold flex border px-2 py-2 rounded-md bg-gray-50 border-transparent shadow my-2">
+                <span className='mx-1'><IoLocationOutline className='my-1 font-bold text-lg' /></span>
                 {bus?.routesId?.origin || "Unknown"} <FaArrowRightLong className='my-1 mx-2' /> {bus?.routesId?.destination || "Unknown"}
               </p>
               <div className='flex justify-between my-4'>
-                <p className='flex flex-col text-white font-bold'>
+                <p className='flex flex-col font-bold'>
                   {formatTime(bus?.dep_time)}
-                  <span className='text-gray-400 font-normal text-sm'>Departure</span>
+                  <span className='text-gray-700 font-normal text-sm'>Departure</span>
                 </p>
-                <p className='flex flex-col text-white font-bold'>
+                <p className='flex flex-col  font-bold'>
                   {formatTime(bus?.arrivalTime)}
-                  <span className='text-gray-400 font-normal text-sm'>Arrival</span>
+                  <span className='text-gray-700 font-normal text-sm'>Arrival</span>
                 </p>
               </div>
               <div className="flex flex-wrap my-2">
-                {bus.isAc && <p className="bg-gray-800 text-gray-400 text-sm rounded-full px-2 py-1 mr-2">AC</p>}
-                {bus.isSleeper && <p className="bg-gray-800 text-gray-400 text-sm rounded-full px-2 py-1 mr-2">Sleeper</p>}
-                {bus.isSeater && <p className="bg-gray-800 text-gray-400 text-sm rounded-full px-2 py-1 mr-2">Seater</p>}
-                {bus.isWifi && <p className="bg-gray-800 text-gray-400 text-sm rounded-full px-2 py-1 mr-2">WiFi</p>}
+                {bus.isAc && <p className="bg-green-100 text-[#059669] text-sm rounded-full px-2 py-1 mr-2">AC</p>}
+                {bus.isSleeper && <p className="bg-green-100 text-[#059669] text-sm rounded-full px-2 py-1 mr-2">Sleeper</p>}
+                {bus.isSeater && <p className="bg-green-100 text-[#059669] text-sm rounded-full px-2 py-1 mr-2">Seater</p>}
+                {bus.isWifi && <p className="bg-green-100 text-[#059669] text-sm rounded-full px-2 py-1 mr-2">WiFi</p>}
               </div>
               <div className="flex justify-between items-center mt-4 border-t border-t-gray-700 pt-2">
-                <p className="text-white font-bold text-2xl">
+                <p className="flex flex-col font-bold text-2xl text-[#23a983]">
                   ₹{bus?.price || 0}
-                  <span className='text-gray-400 text-sm block'>per person</span>
+                  <span className='text-gray-700 text-sm font-semibold'>per person</span>
                 </p>
                 <button
-                  className="bg-[#21d3ed] shadow-md shadow-[#21d3ed] hover:scale-105 cursor-pointer text-black font-semibold py-2 px-4 rounded-full transition-all"
+                  className="bg-[#23a983] shadow-md hover:scale-105 cursor-pointer font-semibold py-2 px-4 rounded-full transition-all text-white"
                   onClick={() => handleBookNow(bus)}
                 >
                   Book Now
