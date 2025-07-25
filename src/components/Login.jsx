@@ -5,119 +5,136 @@ import AuthContext from '../context/AuthContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-const Login = ({onClose}) => {
+const Login = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      let response;
-      const url = !isLogin ? Register_API : Login_Api;
+      const url = isLogin ? Login_Api : Register_API;
+      const body = isLogin
+        ? { email, password }
+        : { email, password, name, phone: number };
 
-      if (!isLogin) {
-        response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password, name, phone: number }),
-        });
-      } else {
-        response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
 
       const data = await response.json();
-      setMessage(data.message);
       const token = response.headers.get('authorization');
+      setMessage(data.message);
+
       if (token) {
         login(token, data?._id);
         navigate('/profile');
-        onClose()
+        onClose();
       } else {
         throw new Error('No token received from server');
       }
     } catch (err) {
-      console.log('error', err);
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const toggleForm = () => {
-    setIsLogin(!isLogin);
-  };
-
   return (
-    <form
-      className="flex flex-col w-full max-w-md bg-[#060e23] text-white rounded-lg shadow-xl p-6"
-      onSubmit={handleSubmit}
-    >
-      <h1 className="text-center font-bold text-2xl mb-4">
-        {isLogin ? 'Welcome Back' : 'Create Account'}
-      </h1>
+    <div className="flex items-center justify-center px-2 bg-opacity-60 backdrop-blur-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white w-full max-w-md rounded-2xl shadow-xl p-8"
+      >
+        <h2 className="text-2xl font-bold text-center text-[#101828]">Welcome to TripTix</h2>
+        <p className="text-center text-gray-500 mb-6">Your journey starts here</p>
 
-      {!isLogin && (
-        <>
-          <label className="text-sm font-medium mt-2">Name</label>
-          <input
-            type="text"
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
-            className="bg-[#0e1a3a] border border-gray-700 text-white px-4 py-2 rounded-md mt-1"
-          />
-        </>
-      )}
+        <div className="flex mb-6 border border-transparent rounded-lg overflow-hidden text-sm font-semibold">
+          <button
+            type="button"
+            onClick={() => setIsLogin(true)}
+            className={`w-1/2 py-2 cursor-pointer ${
+              isLogin ? 'bg-gray-200 text-[#101828]' : 'bg-white text-gray-400'
+            }`}
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsLogin(false)}
+            className={`w-1/2 py-2 cursor-pointer ${
+              !isLogin ? 'bg-gray-200 text-[#101828]' : 'bg-white text-gray-400'
+            }`}
+          >
+            Sign Up
+          </button>
+        </div>
 
-      <label className="text-sm font-medium mt-3">Email</label>
-      <input
-        type="email"
-        value={email}
-        required
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Your email"
-        className="bg-[#0e1a3a] border border-gray-700 text-white px-4 py-2 rounded-md mt-1"
-      />
+        {!isLogin && (
+          <>
+            <label className="font-medium text-black">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              placeholder="Your name"
+              className="w-full mt-1 mb-4 px-4 py-2 border rounded-md text-gray-500 border-gray-300 shadow focus:outline-[#23a983]"
+            />
+          </>
+        )}
 
-      {!isLogin && (
-        <>
-          <label className="text-sm font-medium mt-3">Phone</label>
-          <input
-            type="tel"
-            value={number}
-            required
-            onChange={(e) => setNumber(e.target.value)}
-            placeholder="Your phone"
-            className="bg-[#0e1a3a] border border-gray-700 text-white px-4 py-2 rounded-md mt-1"
-          />
-        </>
-      )}
+        <label className="font-medium text-black">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="you@example.com"
+          className="w-full mt-1 mb-4 px-4 py-2 border rounded-md text-gray-500 border-gray-300 shadow focus:outline-[#23a983]"
 
-      <label className="text-sm font-medium mt-3">Password</label>
-      <input
-        type="password"
-        value={password}
-        required
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Your password"
-        className="bg-[#0e1a3a] border border-gray-700 text-white px-4 py-2 rounded-md mt-1"
-      />
+        />
 
-      <button
+        {!isLogin && (
+          <>
+            <label className="font-medium text-black">Phone</label>
+            <input
+              type="tel"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+              required
+              placeholder="Phone number"
+                className="w-full mt-1 mb-4 px-4 py-2 border rounded-md text-gray-500 border-gray-300 shadow focus:outline-[#23a983]"
+
+            />
+          </>
+        )}
+
+        <label className="font-medium text-black">Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder="Enter your password"
+           className="w-full mt-1 mb-4 px-4 py-2 border rounded-md text-gray-500 border-gray-300 shadow focus:outline-[#23a983]"
+
+        />
+
+        <button
           type="submit"
-          className="mt-6 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-cyan-400 hover:to-blue-500 text-black font-semibold py-2 rounded-md shadow-lg transition-all cursor-pointer w-full"
+          className="w-full bg-gradient-to-r from-[#23a983] to-[#1ac0a2] text-white font-semibold py-2 rounded-md shadow hover:brightness-110"
         >
           {isLoading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -126,23 +143,23 @@ const Login = ({onClose}) => {
           ) : (
             isLogin ? 'Sign In' : 'Sign Up'
           )}
-      </button>
+        </button>
 
+        {message && (
+          <p className="text-sm text-red-500 text-center mt-3">{message}</p>
+        )}
 
-      {message && (
-        <p className="text-red-500 text-sm text-center mt-3">{message}</p>
-      )}
-
-      <p className="text-center mt-4 text-sm">
-        {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
-        <span
-          className="text-blue-400 hover:underline cursor-pointer"
-          onClick={toggleForm}
-        >
-          {isLogin ? 'Sign Up' : 'Sign In'}
-        </span>
-      </p>
-    </form>
+        <div className="text-center mt-4 text-sm text-gray-600">
+          {isLogin ? 'Don’t have an account?' : 'Already have an account?'}{' '}
+          <span
+            onClick={() => setIsLogin(!isLogin)}
+            className="text-[#23a983] cursor-pointer hover:underline font-medium"
+          >
+            {isLogin ? 'Sign Up' : 'Sign In'}
+          </span>
+        </div>
+      </form>
+    </div>
   );
 };
 
