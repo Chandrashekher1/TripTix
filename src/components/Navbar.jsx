@@ -28,7 +28,7 @@ const Navbar = () => {
     <div className="flex items-center gap-4">
       <Link
         to="/"
-        className="hidden md:flex items-center rounded-md px-4 py-2 text-white hover:text-blue-500 font-medium transition"
+        className="hidden md:flex items-center rounded-md px-4 py-2 hover:bg-green-50 hover:text-[#23a983] font-medium transition"
       >
         <IoIosSearch className="text-xl mr-1" />
         Search
@@ -36,7 +36,7 @@ const Navbar = () => {
 
       <Link
         to="/track-bus"
-        className="hidden md:flex items-center rounded-md px-4 py-2 text-white hover:text-blue-500 font-medium transition"
+        className="hidden md:flex items-center rounded-lg px-4 py-2 hover:bg-green-50 hover:text-[#23a983] font-medium transition"
       >
         <LuBus className="text-lg mr-1" />
         Track Bus
@@ -44,40 +44,31 @@ const Navbar = () => {
 
       <Button
         onClick={handleProfileClick}
-        variant="contained"
+        variant="text"
         sx={{
-          background: 'linear-gradient(to right, #21d4fd, #00c9ff)',
-          color: '#fff',
+          color: 'black', 
           px: 2.5,
           py: 1.2,
           textTransform: 'none',
           fontWeight: 600,
-          borderRadius: '8px',
-          boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
-          '&:hover': {
-            background: 'linear-gradient(to right, #00c9ff, #21d4fd)',
-          },
           display: 'flex',
           alignItems: 'center',
-          gap: 1
+          gap: 1,
+          '&:hover': {
+            backgroundColor: '#f0fdf4', 
+            color: '#23a983'
+          }
         }}
       >
-        <LuUser className="text-lg" />
+        <LuUser className="text-lg"  />
         {token ? 'Profile' : 'Sign In'}
       </Button>
 
       <Dialog
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          sx: {
-            p: 3,
-            borderRadius: 3,
-            backgroundColor: '#060e23',
-            color: 'white',
-            minWidth: { xs: '90vw', sm: 400 },
-            maxWidth: '95vw'
-          }
+        sx={{
+          borderRadius: 9
         }}
       >
         <Box>
