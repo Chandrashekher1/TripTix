@@ -6,15 +6,12 @@ import Feedback from '../components/Feedback'
 
 const Home = () => {
   return (
-    <div className='bg-gray-950'>
+    <div className=''>
         <div className='text-center px-4 py-8'>
             <h1 className='font-bold text-4xl text-white'>Find Your Perfect Journey</h1>
             <p className='my-4 text-xl text-gray-400'>Book Comfortable bus tickets across the country with real-time seat selection</p>
         </div>
-
-        <div>
-            
-        </div>
+       
         <SearchBar/>
 
         <div className='bg-white py-4 my-8'>
@@ -24,9 +21,9 @@ const Home = () => {
           </div>
           <WhyChoose/>
         </div>
-        <div className='py-12'>
-            <h1 className='font-bold text-3xl text-center text-white'>Top Travel Buses</h1>
-            <p className='my-4 text-center text-gray-400 text-xl'>Discover our most popular routes with premium buses, great amenities, and unbeatable prices.</p>
+        <div className='bg-white py-20'>
+            <h1 className='font-bold text-3xl text-center'>Top Travel <span className='text-[#23a983] font-bold'>Buses</span></h1>
+            <p className='my-4 text-center text-gray-700 text-xl'>Discover our most popular routes with premium buses, great amenities, and unbeatable prices.</p>
             <BusCard/>
         </div>
         <div className='bg-[#f5fefa] py-24'>
