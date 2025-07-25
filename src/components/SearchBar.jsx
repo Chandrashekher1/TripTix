@@ -1,132 +1,139 @@
 import React, { useState } from 'react';
 import { IoLocationOutline } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
-import { FaArrowRight } from "react-icons/fa";
 import { MdOutlineCalendarToday } from "react-icons/md";
+import { CiSearch } from "react-icons/ci";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { Bus_API, Route_API } from '../utils/constant';
-import { useNavigate } from 'react-router-dom';
+import { FaArrowRight } from "react-icons/fa";
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
+import { Bus_API, Route_API } from '../utils/constant';
 import useBus from '../hook/useBus';
 
 const SearchBar = () => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
-  const [isLoading,setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const { setBuses, setRouteDetails } = useBus();
   const navigate = useNavigate();
-
-  const { setBuses, setRouteDetails } = useBus(); 
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setRouteDetails({ origin, destination, date });
-    setIsLoading(true)
 
     try {
       const routeResponse = await fetch(`${Route_API}origin=${origin}&destination=${destination}`);
       const routeJson = await routeResponse.json();
       if (!routeJson.success) {
         alert("No route found.");
+        setIsLoading(false);
         return;
       }
+
       const busResponse = await fetch(`${Bus_API}?origin=${origin}&destination=${destination}&date=${date}`);
       const busJson = await busResponse.json();
-      setBuses(busJson)
+      setBuses(busJson);
       navigate('/available-seat');
     } catch (err) {
-      console.error("Error fetching buses:", err.message);
+      console.error("Error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className='mx-4 bg-[#060e23] shadow-xl border rounded-lg border-gray-900 px-4 md:flex flex-col items-center py-8 md:mx-40 mb-20'>
-      <div>
-          <form onSubmit={handleSearch} className='flex flex-col  md:flex-row flex-wrap'>
-        <div>
-          <label className='flex text-lg font-semibold text-white my-2'>
-            <IoLocationOutline style={{ marginTop: '4px', color: "blue", marginRight: '4px', fontSize:'20px' }} /> From
+  <div className="w-full px-4 ">
+    <div className="bg-white shadow-2xl rounded-xl p-6 md:p-8 max-w-6xl mx-auto -mt-40 z-10 relative">
+      <form
+        onSubmit={handleSearch}
+        className="flex flex-col md:flex-row items-end gap-4 md:gap-6"
+      >
+        <div className="flex-1">
+          <label className="block mb-1 font-semibold text-gray-700 flex items-center">
+            <IoLocationOutline className="mr-1 text-green-600" />
+            From
           </label>
-          <input
-            type="text"
+          <select
             value={origin}
             onChange={(e) => setOrigin(e.target.value)}
-            placeholder='Departure city'
-            className='border px-4 py-3 rounded-md border-gray-700 bg-black text-gray-400 focus:outline-blue-700'
+            className="w-full px-4 py-2.5 border rounded-md bg-green-50 focus:outline-[#23a983]"
             required
-          />
+          >
+            <option value="" disabled>Select origin</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Mumbai">Mumbai</option>
+          </select>
         </div>
 
-        <div className='flex justify-center items-center ml-4'>
-          <FaArrowRight style={{ color: 'blue' , marginTop:'20px' }} />
-        </div>
-
-        <div className='md:mx-8'>
-          <label className='flex text-lg font-semibold text-white my-2'>
-            <IoLocationOutline style={{ marginTop: '4px', color: 'green', marginRight: '4px' }} /> To
+        <div className="flex-1">
+          <label className="block mb-1 font-semibold text-gray-700 flex items-center">
+            <IoLocationOutline className="mr-1 text-cyan-600" />
+            To
           </label>
-          <input
-            type="text"
+          <select
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder='Destination city'
-            className='border px-4 py-3 rounded-md border-gray-800 bg-black text-gray-400 focus:outline-blue-700'
+            className="w-full px-4 py-2.5 border rounded-md bg-gray-50 focus:outline-[#23a983]"
             required
-          />
+          >
+            <option value="" disabled>Select destination</option>
+            <option value="Dehradun">Dehradun</option>
+            <option value="Jaipur">Jaipur</option>
+          </select>
         </div>
 
-        <div>
-          <label className='flex text-lg font-semibold text-white my-2'>
-            <MdOutlineCalendarToday style={{ marginTop: '4px', marginRight: '2px' }} /> Journey Date
+        <div className="flex-1">
+          <label className="block mb-1 font-semibold text-gray-700 flex items-center">
+            <MdOutlineCalendarToday className="mr-1 text-gray-600" />
+            Date
           </label>
           <input
             type="date"
             value={date}
-            name='select date'
-            min={new Date().toISOString().split("T")[0]}
-            placeholder='Select date'
+            min={new Date().toISOString().split('T')[0]}
             onChange={(e) => setDate(e.target.value)}
-            className='border px-4 py-3 rounded-md border-gray-800 bg-black text-gray-400 focus:outline-blue-700'
+            className="w-full px-4 py-2.5 border rounded-md bg-gray-50 focus:outline-[#23a983]"
             required
           />
         </div>
 
-        <button
-          type='submit'
-          className='bg-[#21d3ed] shadow-md shadow-[#21d3ed] flex items-center justify-center font-semibold my-8 py-2 px-4 rounded-md md:mx-8 md:my-12 cursor-pointer hover:bg-cyan-500 min-w-[150px]'
-        >
-          {isLoading ? (
-            <CircularProgress size={24} style={{ color: 'blue' }} />
-          ) : (
-            <>
-              <CiSearch className='mr-2 text-black text-xl' />
-              <span className='text-black'>Search Buses</span>
-            </>
-          )}
-        </button>
-
-      </form>
-      </div>
-      <div>
         <div>
-          <h3 className='font-semibold text-white'>Popular Routes:</h3>
-        <div className='flex flex-wrap gap-2'>
+          <button
+            type="submit"
+            className="bg-[#23a983] hover:bg-[#1db179] transition-all text-white w-full py-3 px-6 rounded-md flex justify-center items-center font-semibold shadow-md cursor-pointer"
+          >
+            {isLoading ? (
+              <CircularProgress size={20} style={{ color: 'white' }} />
+            ) : (
+              <>
+                <CiSearch className="mr-2 text-lg" />
+                Search Buses
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+
+      <div className="mt-6">
+        <h3 className="font-semibold text-gray-700 mb-2">Popular Routes:</h3>
+        <div className="flex flex-wrap gap-3">
           <button
             type="button"
             onClick={() => {
               setOrigin('Delhi');
               setDestination('Dehradun');
             }}
-            className='flex border border-transparent rounded-md cursor-pointer px-2 py-1 hover:bg-gray-800 bg-gray-900 hover:text-white text-blue-700 font-semibold md:my-2'
+            className="px-3 py-1.5 rounded-md border border-gray-300 text-[#23a983] hover:bg-green-50 font-medium flex items-center"
           >
-            Delhi <IoIosArrowRoundForward style={{ marginTop: '4px', marginLeft: '4px', marginRight: '4px' }} /> Dehradun
+            Delhi <IoIosArrowRoundForward className="mx-2 text-gray-600" /> Dehradun
           </button>
-          </div>
         </div>
       </div>
     </div>
-  );
-};
+  </div>
+)
+}
+
 
 export default SearchBar;
