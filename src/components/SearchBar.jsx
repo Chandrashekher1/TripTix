@@ -44,7 +44,7 @@ const SearchBar = () => {
 
   return (
   <div className="w-full px-4 ">
-    <div className="bg-white shadow-2xl rounded-xl p-6 md:p-8 max-w-6xl mx-auto -mt-40 z-10 relative">
+    <div className="bg-white shadow-2xl rounded-xl p-4 px-6  max-w-6xl mx-auto -mt-40 z-10 relative">
       <form
         onSubmit={handleSearch}
         className="flex flex-col md:flex-row items-end gap-4 md:gap-6"
@@ -57,18 +57,18 @@ const SearchBar = () => {
           <select
             value={origin}
             onChange={(e) => setOrigin(e.target.value)}
-            className="w-full px-4 py-2.5 border rounded-md bg-green-50 focus:outline-[#23a983]"
+            className="w-full px-4 px py-2.5 border rounded-md bg-green-50 focus:outline-[#23a983]"
             required
           >
-            <option value="" disabled>Select origin</option>
-            <option value="Delhi">Delhi</option>
+            <option value="" disabled className='hover:bg-[#23a983]'>Select origin</option>
+            <option value="Delhi" className='hover:bg-[#23a983]'>Delhi</option>
             <option value="Mumbai">Mumbai</option>
           </select>
         </div>
 
         <div className="flex-1">
           <label className="block mb-1 font-semibold text-gray-700 flex items-center">
-            <IoLocationOutline className="mr-1 text-cyan-600" />
+            <IoLocationOutline className="mr-4 text-cyan-600" />
             To
           </label>
           <select
@@ -77,7 +77,7 @@ const SearchBar = () => {
             className="w-full px-4 py-2.5 border rounded-md bg-gray-50 focus:outline-[#23a983]"
             required
           >
-            <option value="" disabled>Select destination</option>
+            <option value="" disabled className='hover:bg-[#23a983]'>Select destination</option>
             <option value="Dehradun">Dehradun</option>
             <option value="Jaipur">Jaipur</option>
           </select>
@@ -115,7 +115,7 @@ const SearchBar = () => {
         </div>
       </form>
 
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <h3 className="font-semibold text-gray-700 mb-2">Popular Routes:</h3>
         <div className="flex flex-wrap gap-3">
           <button
@@ -129,7 +129,7 @@ const SearchBar = () => {
             Delhi <IoIosArrowRoundForward className="mx-2 text-gray-600" /> Dehradun
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   </div>
 )
