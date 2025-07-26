@@ -6,6 +6,7 @@ import {Bus_API, Seat_API } from '../utils/constant';
 import { io } from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
 import { MdEventSeat } from "react-icons/md";
+import {motion} from "framer-motion"
 
 const SeatSelection = () => {
   const { id: busId } = useParams();
@@ -77,7 +78,20 @@ const SeatSelection = () => {
     socket.emit('lockSeats',{busId, seatIds: selectedSeats, userId: userId})
     navigate('/passenger-details', { state: { busId, selectedSeats } })
   }
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
   return (
+
+    <motion.div
+          variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+    >
     <div className='px-6 md:px-12 md:py-12 bg-[#f5fefa]'>
       <div className='flex flex-col md:flex-row md:justify-between items-start md:items-center mb-6 gap-4 md:px-24'>
         <p className='flex items-center text-black font-medium cursor-pointer hover:border rounded-lg border-transparent px-4 py-2 hover:bg-green-200' onClick={() => navigate('/available-seat')}>
@@ -170,6 +184,8 @@ const SeatSelection = () => {
         </div>
       </div>
     </div>
+
+    </motion.div>
   );
 };
 
