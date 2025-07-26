@@ -55,18 +55,18 @@ const AvailableBus = () => {
   };
 
   const renderSkeleton = () => (
-    <Box className="max-w-5xl mx-auto mb-6 p-4 bg-[#0f172a] rounded-xl border border-gray-800">
-      <Skeleton variant="text" width={150} height={30} sx={{ bgcolor: 'grey.600' }} />
-      <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: 'grey.600', my: 1 }} />
-      <Skeleton variant="rectangular" height={40} sx={{ bgcolor: 'grey.600', my: 2 }} />
-      <Skeleton variant="text" width={200} height={30} sx={{ bgcolor: 'grey.600', my: 1 }} />
-      <Skeleton variant="rectangular" height={40} sx={{ bgcolor: 'grey.600', mt: 2 }} />
+    <Box className="max-w-5xl mx-auto mb-6 p-4 bg-green-100 rounded-xl border border-transparent">
+      <Skeleton variant="text" width={150} height={30} sx={{ bgcolor: 'grey.100' }} />
+      <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: 'grey.100', my: 1 }} />
+      <Skeleton variant="rectangular" height={40} sx={{ bgcolor: 'grey.100', my: 2 }} />
+      <Skeleton variant="text" width={200} height={30} sx={{ bgcolor: 'grey.100', my: 1 }} />
+      <Skeleton variant="rectangular" height={40} sx={{ bgcolor: 'grey.100', mt: 2 }} />
     </Box>
   );
 
   return (
-    <div className="bg-gray-950 py-4 px-2 md:px-12 border-b border-b-gray-800">
-      <div className='bg-gray-900 text-gray-300 rounded-md p-3 flex items-center flex-wrap gap-2 justify-center mb-4 border border-gray-700'>
+    <div className="bg-[#f5fefa] py-4 px-2 md:px-12 ">
+      <div className='bg-[#059669] text-white rounded-lg p-3 flex items-center flex-wrap gap-2 justify-center mb-4 border border-transparent shadow-lg'>
         <IoLocationOutline className='text-xl' />
         <span className='font-semibold'>{searchData?.routeDetails.origin}</span>
         <IoIosArrowRoundForward className="text-2xl" />
@@ -80,13 +80,13 @@ const AvailableBus = () => {
         <p className="text-center text-white bg-gray-800 py-8 rounded-md">No buses available for this route.</p>
       ) : (
         buses.map((bus, index) => (
-          <div key={index} className="bg-[#0f172a] text-white rounded-xl shadow-lg p-4 mb-6 max-w-5xl mx-auto border border-gray-800">
+          <div key={index} className="bg-white text-black rounded-xl shadow-xl hover:-translate-y-1 duration-300 p-4 mb-6 max-w-5xl mx-auto border border-transparent">
             <div className="flex justify-between items-center mb-2 flex-wrap">
               <div>
                 <h2 className="font-bold text-lg">{bus.name || bus.operator}</h2>
-                <p className="text-sm text-gray-400">{bus.isAc ? "AC" : "Non-AC"} {bus.isSleeper ? "Sleeper" : "Seater"}</p>
+                <p className="text-sm text-gray-700">{bus.isAc ? "AC" : "Non-AC"} {bus.isSleeper ? "Sleeper" : "Seater"}</p>
               </div>
-              <div className="flex items-center gap-1 text-yellow-400 text-sm font-semibold">
+              <div className="flex items-center gap-1 text-[#059468]  text-sm font-semibold">
                 <FaStar /> 4.5
               </div>
             </div>
@@ -95,7 +95,7 @@ const AvailableBus = () => {
               <div className="font-medium text-lg">
                 {new Date(bus.dep_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </div>
-              <div className="text-gray-400 text-center">
+              <div className="text-gray-700 text-center border-b border-b-gray-700">
                 {getDuration(bus.dep_time, bus.arrivalTime)}
               </div>
               <div className="font-medium text-lg">
@@ -103,26 +103,26 @@ const AvailableBus = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-4 text-sm text-gray-300 mb-3">
-              {bus.isWifi && <div className="flex items-center gap-1"><FaWifi /> WiFi</div>}
-              <div className="flex items-center gap-1"><FaBolt /> Charging</div>
-              {bus.isAc && <div className="flex items-center gap-1"><MdAcUnit /> AC</div>}
-              <div className="flex items-center gap-1"><MdOutlineTheaters /> Entertainment</div>
+            <div className="flex flex-wrap gap-4 text-sm mb-3">
+              {bus.isWifi && <div className="bg-green-100 text-[#059669] px-2 rounded-full">Wifi</div>}
+              <div className="bg-green-100 text-[#059669] px-2 rounded-full">Charging</div>
+              {bus.isAc && <div className="bg-green-100 text-[#059669] px-2 rounded-full">AC</div>}
+              <div className="bg-green-100 text-[#059669] px-2 rounded-full">Entertainment</div>
             </div>
 
             <div className="flex justify-between items-center flex-wrap mt-4">
-              <div className="flex items-center text-green-400 font-semibold text-sm mb-2 md:mb-0">
+              <div className="flex items-center text-green-900 font-semibold text-sm mb-2 md:mb-0">
                 <TbUsers className="text-lg mr-1" />
                 {bus.totalSeat} seats left
               </div>
               <div className="text-right">
-                <p className='text-gray-400 text-sm'>Starting from</p>
-                <p className='text-xl font-bold text-white'>₹ {bus.price}</p>
+                <p className='text-gray-700 text-sm'>Starting from</p>
+                <p className='text-xl font-bold text-black'>₹ {bus.price}</p>
               </div>
             </div>
             <button
               onClick={() => handleSeat(bus._id)}
-              className="mt-4 w-full btn-primary hover:bg-blue-700 transition-colors text-white py-2 rounded-lg font-semibold cursor-pointer"
+              className="mt-4 w-full bg-[#059468] hover:bg-green-800 transition-colors text-white py-2 rounded-lg font-semibold cursor-pointer"
             >
               Select Seats
             </button>
