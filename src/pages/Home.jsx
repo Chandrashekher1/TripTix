@@ -8,19 +8,19 @@ const Home = () => {
   return (
     <div>
      
-      <div className="relative w-full h-[400px] bg-gray-100">
+      <div className="relative w-full h-[500px] bg-gray-100">
         <img
-          src="src/components/heroBus.jpg"
+          src="src/assets/busHero2.jpg"
           alt="Hero Bus"
           className="w-full h-full object-cover object-center"
         />
 
-        <div className="absolute top-[75%] left-1/2 w-full max-w-6xl px-4 transform -translate-x-1/2 -translate-y-1/2 ">
+        <div className="absolute top-[120%] left-1/2 w-full max-w-6xl px-4 transform -translate-x-1/2 -translate-y-1/2 ">
           <SearchBar />
         </div>
       </div>
 
-      <div className="bg-white py-4 my-8">
+      <div className="bg-white py-4 my-16">
         <div className="md:w-[60vw] md:mx-auto mx-4 flex flex-col items-center justify-center my-auto">
           <h1 className="font-bold text-3xl md:text-4xl text-center my-4">
             Why choose <span className="text-[#23a983]">TripTix?</span>
