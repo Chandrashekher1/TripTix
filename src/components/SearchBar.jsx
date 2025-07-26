@@ -44,10 +44,10 @@ const SearchBar = () => {
 
   return (
   <div className="w-full px-4 ">
-    <div className="bg-white shadow-2xl rounded-xl p-4 px-6  max-w-6xl mx-auto -mt-40 z-10 relative">
+    <div className="bg-white md:shadow-2xl rounded-xl p-4 px-6  max-w-6xl mx-auto -mt-40 z-10 relative">
       <form
         onSubmit={handleSearch}
-        className="flex flex-col md:flex-row items-end gap-4 md:gap-6"
+        className="flex flex-col md:flex-row md:items-end gap-4 md:gap-6"
       >
         <div className="flex-1">
           <label className="block mb-1 font-semibold text-gray-700 flex items-center">
