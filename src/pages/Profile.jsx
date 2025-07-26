@@ -69,24 +69,24 @@ const Profile = () => {
   }
 
   return (
-    <div className='py-2 border-b border-b-gray-700'>
+    <div className='py-2 border-b border-b-gray-700 bg-[#f5fefa]'>
       <div className='flex items-center justify-center flex-col py-8'>
         <span className='rounded-full p-4 bg-gradient-to-r from-blue-500 to-teal-500'>
           <LuUser style={{ fontSize: '40px' }} />
         </span>
-        <h1 className='font-bold text-3xl my-4 text-white'>{data.name}</h1>
-        <p className='flex text-gray-400'>{data.email} <span className='mx-4'><li>{data.phone}</li></span></p>
+        <h1 className='font-bold text-3xl my-4 text-black'>{data.name}</h1>
+        <p className='flex text-gray-700'>{data.email} <span className='mx-4'><li>{data.phone}</li></span></p>
       </div>
 
-      <div className='flex mx-4 my-4 text-gray-700 border border-transparent bg-gray-900 py-1 rounded-md justify-around md:mx-60'>
+      <div className='flex mx-4 my-4 text-gray-700 border border-transparent bg-white shadow-lg py-1 rounded-md justify-around md:mx-60'>
         <button
-          className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${isProfile ? 'bg-[#060e23] text-white' : 'bg-transparent'}`}
+          className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${isProfile ? 'bg-green-200 text-black' : 'bg-transparent'}`}
           onClick={() => setIsProfile(true)}
         >
           My Bookings
         </button>
         <button
-          className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${!isProfile ? 'bg-[#060e23] text-white' : 'bg-transparent'}`}
+          className={`cursor-pointer w-full py-2 rounded-md mx-1 font-semibold ${!isProfile ? 'bg-green-200 text-black' : 'bg-transparent'}`}
           onClick={() => setIsProfile(false)}
         >
           Profile Settings
@@ -95,48 +95,48 @@ const Profile = () => {
 
       <div className='mx-4 my-4 md:my-8 md:mx-60'>
         {!isProfile && (
-          <div className='bg-[#060e23] text-white border border-transparent shadow-md px-4 rounded-md'>
+          <div className='text-black bg-white border border-transparent shadow-lg px-4 rounded-lg'>
             <h1 className='font-semibold text-2xl my-4'>Personal Information</h1>
             <div className='my-4'>
-              <label className='text-gray-400 font-semibold'>Full Name</label>
+              <label className='text-gray-700 font-semibold'>Full Name</label>
               {editMode ? (
                 <input
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className='border w-full px-2 py-1 rounded-md my-2 text-gray-400'
+                  className='border w-full px-2 py-1 rounded-md my-2 text-black'
                 />
-              ) : <p className='text-gray-100'>{data?.name}</p>}
+              ) : <p className='text-black font-bold text-lg'>{data?.name}</p>}
 
-              <label className='text-gray-400 font-semibold mt-4'>Email</label>
+              <label className='text-gray-700 font-semibold mt-4'>Email</label>
               {editMode ? (
                 <input
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
-                  className='border w-full px-2 py-1 rounded-md my-2 text-gray-400'
+                  className='border w-full px-2 py-1 rounded-md my-2 text-black'
                 />
-              ) : <p className='text-gray-100'>{data?.email}</p>}
+              ) : <p className='text-black font-bold text-lg'>{data?.email}</p>}
 
-              <label className='font-semibold text-gray-400'>Phone</label>
+              <label className='font-semibold text-gray-700'>Phone</label>
               {editMode ? (
                 <input
                   value={editPhone}
                   onChange={(e) => setEditPhone(e.target.value)}
-                  className='border w-full px-2 py-1 rounded-md my-2 text-gray-400'
+                  className='border w-full px-2 py-1 rounded-md my-2 text-black'
                 />
-              ) : <p className='text-gray-100'>{data?.phone}</p>}
+              ) : <p className='text-black font-bold text-lg'>{data?.phone}</p>}
             </div>
 
             <div className='flex justify-between items-center'>
               {editMode ? (
                 <button
-                  className='bg-[#21d3ed] shadow-md text-black font-semibold px-4 py-2 rounded-md hover:bg-cyan-500 my-8'
+                  className='bg-green-700 shadow-md text-white font-semibold px-4 py-2 rounded-md hover:bg-green-600 cursor-pointer my-8'
                   onClick={updateUser}
                 >
                   Save Changes
                 </button>
               ) : (
                 <button
-                  className='bg-[#21d3ed] shadow-md text-black font-semibold px-4 py-2 rounded-md hover:bg-cyan-500 my-8'
+                  className='bg-gray-400 shadow-md text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-600 cursor-pointer my-8'
                   onClick={() => setEditMode(true)}
                 >
                   Edit Profile
@@ -154,7 +154,7 @@ const Profile = () => {
         )}
 
         {isProfile && (
-          <div className='bg-[#060e23] text-white px-4 border border-transparent py-8 rounded-md my-8 shadow-md'>
+          <div className='bg-white text-black px-4 border border-transparent py-8 rounded-lg my-8 shadow-lg'>
             <p className='font-semibold text-xl text-gray-700'>No Booking Details found.</p>
           </div>
         )}
