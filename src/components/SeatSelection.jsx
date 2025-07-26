@@ -20,7 +20,7 @@ const SeatSelection = () => {
 
   if(!token){
     alert("Please login to book seats");
-    navigate('/login')
+    navigate('/')
   }
 
   useEffect(() => {
