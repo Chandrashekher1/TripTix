@@ -17,7 +17,7 @@ const Footer = () => {
         </div>
 
         <div>
-            <h1 className='text-2xl text-white my-4 font-bold'>Quick Links</h1>
+            <h1 className='text-2xl text-[#23a983] my-4 font-bold '>Quick Links</h1>
             <ul className=''>
                 <Link to='/track-bus'><li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>Track Bus</li></Link>
                 <Link to='/profile'><li className='text-gray-400 my-2 hover:text-white hover:cursor-pointer'>My Booking</li></Link>
@@ -25,7 +25,7 @@ const Footer = () => {
 
         </div>
         <div>
-            <h1 className='text-2xl text-white my-4 font-bold'>Contact Us</h1>
+            <h1 className='text-2xl text-[#23a983] my-4 font-bold'>Contact Us</h1>
             <a href="callto:9990418622" className='flex text-gray-400'>{<LuPhone style={{color:'teal' , fontSize:'20px', marginTop:'3px' , marginRight:'6px'}}/>} +91-9990418622</a>
             <a href="mailto:cpsaw999041@gmail.com" className='flex text-gray-400 my-2'>{<MdOutlineMail style={{color:'teal' , fontSize:'20px', marginTop:'3px' , marginRight:'6px'}}/>} support@triptix.com</a>
             <p className='flex '><IoLocationOutline style={{marginTop:'4px', color:"teal", marginRight:'4px',fontSize:'20px'}}/><span className='text-gray-400'>123 Travel Street transport City, TC 12345</span></p>
