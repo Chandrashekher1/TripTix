@@ -4,6 +4,7 @@ import BusCard from '../components/BusCard';
 import WhyChoose from '../components/WhyChoose';
 import Feedback from '../components/Feedback';
 import { motion } from "framer-motion";
+import { Hero_image } from '../utils/constant';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
@@ -15,7 +16,7 @@ const Home = () => {
     <div>
       <div className="relative w-full h-[500px] bg-gray-100">
         <img
-          src="src/assets/busHero2.jpg"
+          src={`${Hero_image}`}
           alt="Hero Bus"
           className="w-full h-full object-cover object-center"
         />
