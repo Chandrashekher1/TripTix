@@ -3,6 +3,7 @@ import { LuUser } from "react-icons/lu";
 import { Profile_API} from '../utils/constant';
 import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const [isProfile, setIsProfile] = useState(false);
@@ -15,6 +16,12 @@ const Profile = () => {
   const navigate = useNavigate();
   const id = localStorage.getItem('userId');
   const { logout ,token } = useContext(AuthContext);
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
   
   useEffect(() => {
     fetchUser();
@@ -69,7 +76,13 @@ const Profile = () => {
   }
 
   return (
-    <div className='py-2 border-b border-b-gray-700 bg-[#f5fefa]'>
+    <motion.div 
+        variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+      >
+         <div className='py-2 border-b border-b-gray-700 bg-[#f5fefa]'>
       <div className='flex items-center justify-center flex-col py-8'>
         <span className='rounded-full p-4 bg-gradient-to-r from-blue-500 to-teal-500'>
           <LuUser style={{ fontSize: '40px' }} />
@@ -160,6 +173,10 @@ const Profile = () => {
         )}
       </div>
     </div>
+
+      </motion.div>
+
+   
   );
 };
 
