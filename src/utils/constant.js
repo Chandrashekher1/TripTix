@@ -7,4 +7,4 @@ export const Seat_API="https://triptix-backend-4ryx.onrender.com/api/v1/seat"
 export const Socket_URL = "https://triptix-backend-4ryx.onrender.com/"
 export const Booking_API = 'https://triptix-backend-4ryx.onrender.com/api/v1/booking/book'
 export const Razorpay_API='https://triptix-backend-4ryx.onrender.com/api/v1/payment/create-order'
-export const token = localStorage.getItem('authorization')
+export const available_gif= "https://media.tenor.com/LkJeSUFuV7UAAAAi/wheels-on-the-bus.gif"
