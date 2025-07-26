@@ -16,6 +16,8 @@
     "@google/generative-ai": "^0.24.1",
     "@mui/material": "^7.2.0",
     "@tailwindcss/vite": "^4.1.11",
+    "framer-motion": "^12.23.9",
+    "motion": "^12.23.9",
     "mui": "^0.0.1",
     "razorpay": "^2.9.6",
     "react": "^19.1.0",
