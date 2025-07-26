@@ -8,5 +8,5 @@ export const Socket_URL = "https://triptix-backend-4ryx.onrender.com/"
 export const Booking_API = 'https://triptix-backend-4ryx.onrender.com/api/v1/booking/book'
 export const Razorpay_API='https://triptix-backend-4ryx.onrender.com/api/v1/payment/create-order'
 export const available_gif= "https://media.tenor.com/LkJeSUFuV7UAAAAi/wheels-on-the-bus.gif"
-export const busCard_image= "/assets/bus.png"
+export const busCard_image= "/assets/bus image.jpg"
 export const Hero_image = "/assets/busHero2.jpg"
