@@ -84,6 +84,7 @@ const PassengerDetails = () => {
         order_id: data.id,
         handler: function(response) {
           alert('Payment successful!');
+          navigate('/')
           if(response.razorpay_payment_id) {
             handleBooking()
           }
@@ -240,8 +241,8 @@ const PassengerDetails = () => {
             </div>
 
               <button
-              className={`btn-primary w-full mt-4 cursor-pointer ${
-                !isFormValid() ? 'opacity-50 cursor-not-allowed' : ''
+              className={`btn-primary w-full mt-4 cursor-pointer bg-[#23a983] rounded-lg px-4 py-2 text-white ${
+                !isFormValid() ? 'opacity-50 cursor-not-allowed' : 'active:scale-95'
               }`}
               onClick={handlePayment}
               disabled={!isFormValid()}
@@ -252,9 +253,6 @@ const PassengerDetails = () => {
         </div>
       </motion.div>
     </div>
-
-
-   
   );
 }
 
