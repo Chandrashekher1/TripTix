@@ -110,15 +110,16 @@ npm run dev
 - Uses Google Gemini API to answer user FAQs related to bookings.
 
 ## Screenshots
-<img width="1908" height="869" alt="image" src="https://github.com/user-attachments/assets/582b7ba7-06c4-4547-87bd-87245428c58f" />
+<img width="1899" height="885" alt="image" src="https://github.com/user-attachments/assets/72ae3ca9-4fc4-4353-9fdc-7325fdc37904" />
 
-<img width="1905" height="792" alt="image" src="https://github.com/user-attachments/assets/34505917-fa6d-46fd-81a5-35e0d021d9e4" />
+<img width="1890" height="878" alt="image" src="https://github.com/user-attachments/assets/0986066c-6360-45ff-97d8-18b2d565447c" />
 
-<img width="1905" height="788" alt="image" src="https://github.com/user-attachments/assets/b4256cf4-3e0c-46db-aca7-4ba8b8e0dc0f" />
+<img width="1902" height="887" alt="image" src="https://github.com/user-attachments/assets/559ddf05-e652-429f-af5e-38dc63b9c68f" />
 
-<img width="1905" height="786" alt="image" src="https://github.com/user-attachments/assets/012bff20-1778-47f3-b6a7-8eb235b446a8" />
+<img width="1881" height="864" alt="image" src="https://github.com/user-attachments/assets/63217dcc-cbe3-4730-b8a2-adc4dcf9e879" />
 
-<img width="1898" height="766" alt="image" src="https://github.com/user-attachments/assets/f1fc3267-0ae0-414c-a316-de984a92e7b2" />
+<img width="1844" height="883" alt="image" src="https://github.com/user-attachments/assets/424ba03d-37ed-48f6-9767-d4597c8587ff" />
+
 
 
 
