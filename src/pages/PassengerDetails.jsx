@@ -1,16 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { LuUser } from "react-icons/lu";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Booking_API, Bus_API, Razorpay_API } from '../utils/constant';
+import { Booking_API, Bus_API, Razorpay_API, Socket_URL } from '../utils/constant';
 import { io } from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
-import {motion} from "framer-motion"
+import { motion } from "framer-motion"
+import Dialog from '@mui/material/Dialog';
+import Box from '@mui/material/Box';
+import Login from '../components/Login';
 
 const PassengerDetails = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [BusDetails, setBusDetails] = useState({})
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [passengerDetails, setPassengerDetails] = useState(
       state.selectedSeats.map((seatId) => ({
         seatId,
@@ -19,10 +23,20 @@ const PassengerDetails = () => {
         gender: ''
       }))
   )
-  const socket = io("https://triptix-backend-4ryx.onrender.com/")
+  const socketRef = useRef(null)
   const {token} = useContext(AuthContext)
+
   useEffect(() => {
-    
+    if (!token) return;
+    const socket = io(Socket_URL, { auth: { token } });
+    socketRef.current = socket;
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [token]);
+
+  useEffect(() => {
     const fetchBusDetails = async () => {
       try {
         const fetchBus = await fetch(`${Bus_API}/${state.busId}`);
@@ -35,14 +49,15 @@ const PassengerDetails = () => {
     fetchBusDetails();
   }, []);
 
-  const handleBooking = async () => {
-    const userId = localStorage.getItem("user");
+  const handleBooking = async (activeToken) => {
+    const userId = localStorage.getItem("userId") || localStorage.getItem("user");
+    const currentToken = activeToken || token;
 
     try {
       const res = await fetch(Booking_API, {
         method: 'POST',
         headers: {
-          'authorization':token,
+          'authorization': currentToken,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -65,14 +80,20 @@ const PassengerDetails = () => {
     }
   }
 
-  const handlePayment = async() => {
+  const handlePayment = async () => {
+    if (!token) {
+      setShowLoginModal(true);
+      return;
+    }
+
+    try {
       const res = await fetch(Razorpay_API, {
-        method:'POST',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': token
         },
-        body: JSON.stringify({amount: BusDetails.price * state.selectedSeats.length})
+        body: JSON.stringify({ amount: BusDetails.price * state.selectedSeats.length })
       })
       const data = await res.json()
       const options = {
@@ -88,18 +109,22 @@ const PassengerDetails = () => {
           if(response.razorpay_payment_id) {
             handleBooking()
           }
-      },
-      modal: {
-        ondismiss: () => {
-          alert('Payment cancelled');
-          socket.emit('unlockSeats', {seatIds: state.selectedSeats})
+        },
+        modal: {
+          ondismiss: () => {
+            alert('Payment cancelled');
+            socketRef.current?.emit('unlockSeats', { tripId: state.tripId, seatIds: state.selectedSeats })
+          }
+        },
+        theme: {
+          color: '#3399cc'
         }
-      },
-      theme: {
-          color: '#3399cc'}
-    }
+      }
       const rzp = new window.Razorpay(options)
       rzp.open();
+    } catch (error) {
+      console.error("Payment error:", error);
+    }
   }
   const departureTime = new Date(BusDetails.dep_time).toLocaleTimeString([], {
     hour: '2-digit',
@@ -234,6 +259,7 @@ const PassengerDetails = () => {
             <p className='flex justify-between'>Duration <span className='font-bold'>{getDuration(departureTime,arrivalTime)}</span></p>
 
             <div className='border-b my-4 border-gray-200'></div>
+            {paymentError && <p className='mb-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700'>{paymentError}</p>}
             <div className='border-b border-gray-300 my-4'></div>
             <div>
               <p className='flex justify-between my-2'>Base Fare ({state.selectedSeats.length}) <span>₹{BusDetails.price * state.selectedSeats.length}</span></p>
@@ -252,6 +278,22 @@ const PassengerDetails = () => {
           </div>
         </div>
       </motion.div>
+
+      <Dialog
+        open={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        sx={{ borderRadius: 9 }}
+      >
+        <Box>
+          <Login
+            onClose={() => setShowLoginModal(false)}
+            redirectOnLogin={false}
+            onSuccess={() => {
+              setShowLoginModal(false);
+            }}
+          />
+        </Box>
+      </Dialog>
     </div>
   );
 }

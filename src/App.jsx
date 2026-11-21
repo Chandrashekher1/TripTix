@@ -12,6 +12,8 @@ import Profile from './pages/Profile'
 import BusProvider from './context/BusProvider'
 import ChatBot from './components/ChatBot'
 import OpenPage from './components/OpenPage'
+import AdminDashboard from './pages/AdminDashboard'
+import AdminLogin from './pages/AdminLogin'
 
 function App() {
     // const [loading, setLoading] = useState(true);
@@ -36,6 +38,8 @@ function App() {
             <Route path='/passenger-details' element={<PassengerDetails/>}/>
             <Route path='/track-bus' element={<TrackBus/>}/>
             <Route path='/profile' element={<Profile/>}/>
+            <Route path='/admin/login' element={<AdminLogin/>}/>
+            <Route path='/admin' element={<AdminDashboard/>}/>
           </Routes>
         </div>
         <Footer/>

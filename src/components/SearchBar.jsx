@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
@@ -13,9 +13,31 @@ const SearchBar = () => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [date, setDate] = useState('');
+  const [routes, setRoutes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { setBuses, setRouteDetails } = useBus();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadRoutes = async () => {
+      try {
+        const response = await fetch(`${Route_API}/all`);
+        const data = await response.json();
+        if (response.ok) setRoutes(data.data || []);
+      } catch (error) {
+        console.error('Unable to load routes:', error);
+      }
+    };
+    loadRoutes();
+  }, []);
+
+  const origins = useMemo(() => [...new Set(routes.map((route) => route.origin))], [routes]);
+  const destinations = useMemo(() => routes.filter((route) => route.origin === origin).map((route) => route.destination), [routes, origin]);
+
+  const handleOriginChange = (value) => {
+    setOrigin(value);
+    setDestination('');
+  };
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -23,16 +45,14 @@ const SearchBar = () => {
     setRouteDetails({ origin, destination, date });
 
     try {
-      const routeResponse = await fetch(`${Route_API}origin=${origin}&destination=${destination}`);
-      const routeJson = await routeResponse.json();
-      if (!routeJson.success) {
-        alert("No route found.");
-        setIsLoading(false);
+      const busResponse = await fetch(`${Bus_API}?origin=${origin}&destination=${destination}&date=${date}`);
+      const busJson = await busResponse.json();
+
+      if (!busResponse.ok) {
+        alert(busJson.message || "No route or buses found.");
         return;
       }
 
-      const busResponse = await fetch(`${Bus_API}?origin=${origin}&destination=${destination}&date=${date}`);
-      const busJson = await busResponse.json();
       setBuses(busJson);
       navigate('/available-seat');
     } catch (err) {
@@ -56,13 +76,12 @@ const SearchBar = () => {
           </label>
           <select
             value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
+            onChange={(e) => handleOriginChange(e.target.value)}
             className="w-full px-4 px py-2.5 border rounded-md bg-green-50 focus:outline-[#23a983]"
             required
           >
-            <option value="" disabled className='hover:bg-[#23a983]'>Select origin</option>
-            <option value="Delhi" className='hover:bg-[#23a983]'>Delhi</option>
-            <option value="Mumbai">Mumbai</option>
+            <option value="" disabled>Select origin</option>
+            {origins.map((city) => <option key={city} value={city}>{city}</option>)}
           </select>
         </div>
 
@@ -76,10 +95,10 @@ const SearchBar = () => {
             onChange={(e) => setDestination(e.target.value)}
             className="w-full px-4 py-2.5 border rounded-md bg-gray-50 focus:outline-[#23a983]"
             required
+            disabled={!origin}
           >
-            <option value="" disabled className='hover:bg-[#23a983]'>Select destination</option>
-            <option value="Dehradun">Dehradun</option>
-            <option value="Jaipur">Jaipur</option>
+            <option value="" disabled>Select destination</option>
+            {destinations.map((city) => <option key={city} value={city}>{city}</option>)}
           </select>
         </div>
 

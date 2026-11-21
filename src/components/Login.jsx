@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-const Login = ({ onClose }) => {
+const Login = ({ onClose, redirectOnLogin = true, onSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -39,7 +39,12 @@ const Login = ({ onClose }) => {
 
       if (token) {
         login(token, data?._id);
-        navigate('/profile');
+        if (onSuccess) {
+          onSuccess(token, data?._id);
+        }
+        if (redirectOnLogin) {
+          navigate('/profile');
+        }
         onClose();
       } else {
         throw new Error('No token received from server');

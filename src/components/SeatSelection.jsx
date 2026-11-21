@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { FiUser } from 'react-icons/fi';
-import {Bus_API, Seat_API } from '../utils/constant';
+import {Bus_API, Seat_API, Trip_API, Socket_URL } from '../utils/constant';
 import { io } from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
 import { MdEventSeat } from "react-icons/md";
@@ -15,38 +15,77 @@ const SeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null);
   const [message, setMessage] = useState('');
-  const socket = io("https://triptix-backend-4ryx.onrender.com/")
+  const [trips, setTrips] = useState([]);
+  const [tripId, setTripId] = useState('');
+  const socketRef = useRef(null);
   const {token} = useContext(AuthContext)
 
-  if(!token){
-    alert("Please login to book seats");
-    navigate('/')
-  }
+  useEffect(() => {
+    fetchBusDetails();
+    fetchTrips();
+  }, [busId]);
 
   useEffect(() => {
+    if (!tripId) return;
+    setSelectedSeats([]);
     fetchSeats();
-    fetchBusDetails();
 
-    socket.on('seatsUpdated', ({seatIds,status,userId}) => {
-      setSeats(prev => 
-        prev.map(seat => seatIds.includes(seat._id) ? {...seat, status, userId } : seat))
-    })
+    if (!token) return;
+
+    const socket = io(Socket_URL, { auth: { token } });
+    socketRef.current = socket;
+
+    socket.on('connect', () => {
+      socket.emit('joinTrip', { tripId });
+    });
+
+    socket.on('connect_error', (err) => {
+      setMessage(err.message === 'Invalid token' ? 'Your session has expired. Please log in again.' : 'Live seat updates are unavailable.');
+    });
+
+    socket.on('seatsUpdated', ({ tripId: updatedTripId, seatIds, status, userId }) => {
+      if (updatedTripId !== tripId) return;
+      setSeats(prev =>
+        prev.map(seat => seatIds.includes(seat._id) ? { ...seat, status, userId } : seat))
+      if (status !== 'available') {
+        setSelectedSeats(prev => prev.filter(id => !seatIds.includes(id)));
+      }
+    });
 
     return () => {
-      socket.off('seatsUpdated')
-    }
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [tripId, token]);
 
-  }, [busId]);
+  const fetchTrips = async () => {
+    try {
+      const res = await fetch(`${Trip_API}?busId=${busId}`);
+      const json = await res.json();
+      const list = json.data || [];
+      setTrips(list);
+      if (list.length === 0) {
+        setSeats([]);
+        setTripId('');
+        setMessage('No trips are scheduled for this bus.');
+        return;
+      }
+      const upcoming = list.find(t => new Date(t.departureDate) >= new Date());
+      setTripId((upcoming || list[0])._id);
+    } catch (err) {
+      console.error('Error :', err.message);
+    }
+  };
 
   const fetchSeats = async () => {
     try {
-      const res = await fetch(`${Seat_API}/${busId}`, {
-        headers: { Authorization: token }
-      });
+      const res = await fetch(`${Seat_API}/trip/${tripId}`);
       const json = await res.json();
       if (json.success) {
         setSeats(json.data);
+        setMessage('');
       } else {
+        setSeats([]);
         setMessage(json.message || 'Failed to fetch');
       }
     } catch (err) {
@@ -74,10 +113,29 @@ const SeatSelection = () => {
   };
 
   const handleBooking = () => {
-    const userId = localStorage.getItem('user') 
-    socket.emit('lockSeats',{busId, seatIds: selectedSeats, userId: userId})
-    navigate('/passenger-details', { state: { busId, selectedSeats } })
-  }
+    if (selectedSeats.length === 0) {
+      alert("Please select at least one seat.");
+      return;
+    }
+    const socket = socketRef.current;
+    if (!token || !socket) {
+      setMessage('Please log in to book seats.');
+      return;
+    }
+    socket.timeout(5000).emit('lockSeats', { tripId, seatIds: selectedSeats }, (err, response) => {
+      if (err) {
+        setMessage('The server did not respond. Please try again.');
+        return;
+      }
+      if (!response.success) {
+        setMessage(response.message || 'Could not reserve the selected seats.');
+        setSelectedSeats([]);
+        fetchSeats();
+        return;
+      }
+      navigate('/passenger-details', { state: { busId, tripId, selectedSeats } });
+    });
+  };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
@@ -108,6 +166,22 @@ const SeatSelection = () => {
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
         <div className='bg-white p-6 md:p-8 rounded-lg shadow-xl col-span-2'>
           <h1 className='text-center text-xl md:text-3xl font-bold mb-4 text-black'>Select Your Seats</h1>
+
+          {trips.length > 0 && (
+            <div className='flex justify-center mb-4'>
+              <select
+                value={tripId}
+                onChange={(e) => setTripId(e.target.value)}
+                className='border border-gray-400 rounded-md px-3 py-2 text-black'
+              >
+                {trips.map((trip) => (
+                  <option key={trip._id} value={trip._id}>
+                    {new Date(trip.departureDate).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className='flex gap-6 justify-center mb-6 text-sm md:text-base'>
             <p className='text-black'><span className='inline-block w-4 h-4 border rounded mr-2'></span>Available</p>
