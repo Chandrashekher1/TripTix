@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { LuUser } from "react-icons/lu";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Booking_API, Bus_API, Razorpay_API, Socket_URL } from '../utils/constant';
+import { Booking_API, Bus_API, Razorpay_API, Payment_Verify_API, Socket_URL } from '../utils/constant';
 import { io } from 'socket.io-client';
 import AuthContext from '../context/AuthContext';
 import { motion } from "framer-motion"
@@ -15,13 +15,16 @@ const PassengerDetails = () => {
   const { state } = useLocation()
   const [BusDetails, setBusDetails] = useState({})
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [paymentError, setPaymentError] = useState('');
   const [passengerDetails, setPassengerDetails] = useState(
-      state.selectedSeats.map((seatId) => ({
-        seatId,
-        name: '',
-        age: '',
-        gender: ''
-      }))
+      state?.selectedSeats
+        ? state.selectedSeats.map((seatId) => ({
+            seatId,
+            name: '',
+            age: '',
+            gender: ''
+          }))
+        : []
   )
   const socketRef = useRef(null)
   const {token} = useContext(AuthContext)
@@ -37,6 +40,7 @@ const PassengerDetails = () => {
   }, [token]);
 
   useEffect(() => {
+    if (!state?.busId) return;
     const fetchBusDetails = async () => {
       try {
         const fetchBus = await fetch(`${Bus_API}/${state.busId}`);
@@ -47,7 +51,7 @@ const PassengerDetails = () => {
       }
     };
     fetchBusDetails();
-  }, []);
+  }, [state?.busId]);
 
   const handleBooking = async (activeToken) => {
     const userId = localStorage.getItem("userId") || localStorage.getItem("user");
@@ -62,8 +66,8 @@ const PassengerDetails = () => {
         },
         body: JSON.stringify({
           userId,
-          busId: state.busId,
-          seatIds: state.selectedSeats,
+          busId: state?.busId,
+          seatIds: state?.selectedSeats,
           passengerDetails
         })
       });
@@ -81,6 +85,7 @@ const PassengerDetails = () => {
   }
 
   const handlePayment = async () => {
+    setPaymentError('');
     if (!token) {
       setShowLoginModal(true);
       return;
@@ -93,27 +98,57 @@ const PassengerDetails = () => {
           'Content-Type': 'application/json',
           'Authorization': token
         },
-        body: JSON.stringify({ amount: BusDetails.price * state.selectedSeats.length })
+        body: JSON.stringify({
+          amount: BusDetails.price * (state?.selectedSeats?.length || 0),
+          tripId: state?.tripId,
+          seatIds: state?.selectedSeats,
+          passengerDetails
+        })
       })
       const data = await res.json()
+      if (!res.ok || !data.success) {
+        setPaymentError(data.message || 'Failed to initiate payment.');
+        return;
+      }
+
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID, 
+        key: data.key || import.meta.env.VITE_RAZORPAY_KEY_ID, 
         amount: data.amount,
         currency: data.currency,
         name: 'TripTix Booking',
         description: 'Bus Ticket Booking',
         order_id: data.id,
-        handler: function(response) {
-          alert('Payment successful!');
-          navigate('/')
-          if(response.razorpay_payment_id) {
-            handleBooking()
+        handler: async function(response) {
+          try {
+            const verifyRes = await fetch(Payment_Verify_API, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+              },
+              body: JSON.stringify({
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+                passengerDetails
+              })
+            });
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+              alert('Payment verified & booking confirmed!');
+              navigate('/profile');
+            } else {
+              setPaymentError(verifyData.message || 'Payment verification failed.');
+            }
+          } catch (err) {
+            console.error('Payment verification error:', err);
+            setPaymentError('Payment verification failed. Please contact support.');
           }
         },
         modal: {
           ondismiss: () => {
-            alert('Payment cancelled');
-            socketRef.current?.emit('unlockSeats', { tripId: state.tripId, seatIds: state.selectedSeats })
+            setPaymentError('Payment was cancelled.');
+            socketRef.current?.emit('unlockSeats', { tripId: state?.tripId, seatIds: state?.selectedSeats })
           }
         },
         theme: {
@@ -124,6 +159,7 @@ const PassengerDetails = () => {
       rzp.open();
     } catch (error) {
       console.error("Payment error:", error);
+      setPaymentError(error.message || 'Payment error occurred.');
     }
   }
   const departureTime = new Date(BusDetails.dep_time).toLocaleTimeString([], {
@@ -262,8 +298,8 @@ const PassengerDetails = () => {
             {paymentError && <p className='mb-3 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-700'>{paymentError}</p>}
             <div className='border-b border-gray-300 my-4'></div>
             <div>
-              <p className='flex justify-between my-2'>Base Fare ({state.selectedSeats.length}) <span>₹{BusDetails.price * state.selectedSeats.length}</span></p>
-              <p className='flex justify-between my-2 font-bold text-xl'>Total <span className='text-blue-700'>₹{BusDetails.price * state.selectedSeats.length}</span></p>
+              <p className='flex justify-between my-2'>Base Fare ({state?.selectedSeats?.length || 0}) <span>₹{(BusDetails.price || 0) * (state?.selectedSeats?.length || 0)}</span></p>
+              <p className='flex justify-between my-2 font-bold text-xl'>Total <span className='text-blue-700'>₹{(BusDetails.price || 0) * (state?.selectedSeats?.length || 0)}</span></p>
             </div>
 
               <button

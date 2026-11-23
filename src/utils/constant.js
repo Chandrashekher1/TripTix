@@ -8,6 +8,7 @@ export const Trip_API = "http://localhost:3000/api/v1/trip"
 export const Socket_URL = "http://localhost:3000"
 export const Booking_API = 'http://localhost:3000/api/v1/booking/book'
 export const Razorpay_API = 'http://localhost:3000/api/v1/payment/create-order'
+export const Payment_Verify_API = 'http://localhost:3000/api/v1/payment/verify'
 export const available_gif = "https://media.tenor.com/LkJeSUFuV7UAAAAi/wheels-on-the-bus.gif"
 export const busCard_image = "/assets/bus-image.jpg"
 export const Hero_image = "/assets/busHero2.jpg"
