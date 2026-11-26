@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { LuUser } from "react-icons/lu";
-import { Profile_API} from '../utils/constant';
+import { Booking_Base_API, My_Bookings_API, Profile_API } from '../utils/constant';
 import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
@@ -8,6 +8,9 @@ import { motion } from "framer-motion";
 const Profile = () => {
   const [isProfile, setIsProfile] = useState(false);
   const [data, setData] = useState({});
+  const [bookings, setBookings] = useState([]);
+  const [loadingBookings, setLoadingBookings] = useState(false);
+  const [downloadingId, setDownloadingId] = useState(null);
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const [editPhone, setEditPhone] = useState('');
@@ -24,8 +27,60 @@ const Profile = () => {
 
   
   useEffect(() => {
+    if (!token) return;
     fetchUser();
-  }, [])
+    fetchBookings();
+  }, [token])
+
+  const fetchBookings = async () => {
+    setLoadingBookings(true);
+    try {
+      const res = await fetch(My_Bookings_API, {
+        method: 'GET',
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        },
+      });
+      const json = await res.json();
+      if (json.success) {
+        setBookings(json.data || []);
+      }
+    } catch (err) {
+      console.error("Error fetching bookings:", err.message);
+    } finally {
+      setLoadingBookings(false);
+    }
+  }
+
+  const handleDownloadInvoice = async (bookingId) => {
+    setDownloadingId(bookingId);
+    try {
+      const res = await fetch(`${Booking_Base_API}/${bookingId}/invoice`, {
+        method: 'GET',
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (!res.ok) {
+        throw new Error('Failed to download invoice');
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `TripTix-INV-${bookingId.slice(-8).toUpperCase()}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Error downloading invoice:", err.message);
+      alert("Could not download invoice. Please try again.");
+    } finally {
+      setDownloadingId(null);
+    }
+  }
 
   const fetchUser = async () => {
     try {
@@ -167,8 +222,73 @@ const Profile = () => {
         )}
 
         {isProfile && (
-          <div className='bg-white text-black px-4 border border-transparent py-8 rounded-lg my-8 shadow-lg'>
-            <p className='font-semibold text-xl text-gray-700'>No Booking Details found.</p>
+          <div className='bg-white text-black px-4 md:px-6 border border-transparent py-6 rounded-lg my-8 shadow-lg'>
+            <h2 className='font-semibold text-2xl mb-4'>My Bookings</h2>
+            {loadingBookings ? (
+              <p className='text-gray-600'>Loading your bookings...</p>
+            ) : bookings.length === 0 ? (
+              <p className='font-semibold text-xl text-gray-700'>No Booking Details found.</p>
+            ) : (
+              <div className='flex flex-col gap-4'>
+                {bookings.map((booking) => {
+                  const bus = booking.busId || {};
+                  const route = bus.routesId || {};
+                  const seatNumbers = (booking.seatIds || [])
+                    .map((ts, idx) => ts?.seatId?.seatNumber || `Seat ${idx + 1}`)
+                    .join(', ');
+                  const journeyDate = booking.tripId?.departureDate
+                    ? new Date(booking.tripId.departureDate).toLocaleDateString('en-IN', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                      })
+                    : 'N/A';
+
+                  return (
+                    <div
+                      key={booking._id}
+                      className='border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:shadow-md transition-shadow'
+                    >
+                      <div>
+                        <div className='flex items-center gap-3 mb-1'>
+                          <h3 className='font-bold text-lg capitalize'>
+                            {route.origin || 'Origin'} &rarr; {route.destination || 'Destination'}
+                          </h3>
+                          <span
+                            className={`text-xs font-semibold px-2 py-0.5 rounded-full uppercase ${
+                              booking.status === 'confirmed'
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-red-100 text-red-800'
+                            }`}
+                          >
+                            {booking.status}
+                          </span>
+                        </div>
+                        <p className='text-sm text-gray-700'>
+                          {bus.operator || 'Bus'} ({bus.busNumber || 'N/A'}) &bull; {bus.busType || ''}
+                        </p>
+                        <p className='text-sm text-gray-600 mt-1'>
+                          Journey Date: <span className='font-medium text-black'>{journeyDate}</span> &bull; Seats:{' '}
+                          <span className='font-semibold text-black'>{seatNumbers || 'N/A'}</span>
+                        </p>
+                        <p className='text-xs text-gray-500 mt-1'>
+                          Passengers: {booking.passengerDetails?.length || 0} &bull; Order ID:{' '}
+                          {booking.razorpayOrderId || 'N/A'}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => handleDownloadInvoice(booking._id)}
+                        disabled={downloadingId === booking._id}
+                        className='bg-[#059468] hover:bg-green-800 text-white font-semibold px-4 py-2 rounded-md cursor-pointer disabled:opacity-50 shrink-0'
+                      >
+                        {downloadingId === booking._id ? 'Generating...' : 'Download Invoice (PDF)'}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>
