@@ -364,6 +364,13 @@ const Profile = () => {
                       </div>
 
                       <div className='flex items-center gap-3 shrink-0 flex-wrap'>
+                        <button
+                          onClick={() => navigate(`/track-bus?bookingId=${booking._id}`)}
+                          className='border border-emerald-600 text-emerald-700 hover:bg-emerald-50 font-semibold px-3 py-2 rounded-md cursor-pointer text-sm transition-colors'
+                        >
+                          Track Bus
+                        </button>
+
                         {canCancel && (
                           <button
                             onClick={() => handleOpenCancelModal(booking)}
